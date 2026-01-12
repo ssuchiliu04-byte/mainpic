@@ -284,8 +284,8 @@
                    data-target="zone-ad">
                 <div class="w-12 h-12 flex items-center justify-center bg-gray-300 text-white rounded-full font-bold text-xl mr-4">3</div>
                 <div>
-                  <h3 class="font-bold text-gray-900">重點 ICON</h3>
-                  <p class="text-sm text-gray-600">呈現大小：小 (輔助識別)</p>
+                  <h3 class="font-bold text-gray-900">廣告AD</h3>
+                  <p class="text-sm text-gray-600">呈現大小：中等 (電商平台預設廣告範圍)</p>
                 </div>
               </div>
 
@@ -755,19 +755,24 @@
     const demo = document.getElementById("hierDemo");
 
     function setZoneActive(targetClass) {
-      // 清除 demo active
-      demo.querySelectorAll(".zone").forEach(z => z.classList.remove("active"));
-      demo.classList.add("has-active");
+  // 清除 demo active
+  demo.querySelectorAll(".zone").forEach(z => z.classList.remove("active"));
+  demo.classList.add("has-active");
 
-      // targetClass 可能是 zone-none（表示不需要強調任何區）
-      const targetEl = demo.querySelector("." + targetClass);
-      if (targetEl) {
-        targetEl.classList.add("active");
-      } else {
-        // 沒對應就移除 has-active（讓全部正常）
-        demo.classList.remove("has-active");
-      }
-    }
+  // 特例：右側 1/3 要連同底部延伸區一起亮
+  if (targetClass === "zone-side") {
+    demo.querySelectorAll(".zone-side, .zone-sideFill").forEach(el => el.classList.add("active"));
+    return;
+  }
+
+  // 其他正常流程
+  const targetEl = demo.querySelector("." + targetClass);
+  if (targetEl) {
+    targetEl.classList.add("active");
+  } else {
+    demo.classList.remove("has-active");
+  }
+}
 
     // 左側 item 點擊
     hierList.querySelectorAll(".hier-item").forEach(item => {
@@ -785,3 +790,4 @@
   </script>
 </body>
 </html>
+
