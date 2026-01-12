@@ -69,41 +69,38 @@
       color: transparent;
     }
 
-    /* ✅ 關鍵：右側用一個外層容器畫框，避免中間接縫線 */
     .zone-sideWrap{
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;                 /* 🔑 直接延伸到底 */
-      width: 33.3333%;
-      border-radius: 0 18px 18px 0;
-      overflow: hidden;
-      pointer-events: none;      /* 讓點擊事件走左側清單，不要被擋 */
-      display: grid;
-      grid-template-rows: 110px 1fr 120px; /* 對齊 demo-area 的三列 */
-    }
+  grid-column: 3 / 4;
+  grid-row: 2 / span 2; /* 直接吃中段 + AD */
+  display: flex;
+  flex-direction: column;
+  background: #b30000;
+}
 
-    /* 右側 wrap 內的 header spacer（對齊上方藍條高度） */
-    .zone-sideSpacer{
-      background: transparent;
-    }
+/* 上半 */
+.zone-side{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+}
 
-    /* 禁止右側內部自己畫框（避免交界線） */
-    .zone-side,
-    .zone-sideFill{
-      border: none !important;
-    }
+/* 下半（延伸區） */
+.zone-sideBottom{
+  height: 120px;
+  background: #8b1c1c;
+}
 
-    /* 亮度效果：有選取時，未選取的稍微暗一點 */
-    .demo-area.has-active .zone{ filter: brightness(.72); }
-    .demo-area.has-active .zone.active{ filter: brightness(1); }
+/* ✅ 唯一高亮來源 */
+.zone-sideWrap.active{
+  box-shadow:
+    inset 0 0 0 4px #2563eb,
+    inset 0 0 0 9999px rgba(37,99,235,.12);
+}
 
-    /* 右側選取：只亮外層，框線一整條到底 */
-    .zone-sideWrap.active{
-      outline: 4px solid #2563eb;
-      outline-offset: -4px;
-      box-shadow: inset 0 0 0 9999px rgba(37, 99, 235, 0.10);
-    }
 
     /* 其他區域選取的藍框 */
     .zone-sideWrap.active{
@@ -337,14 +334,13 @@
                 <div class="zone zone-header">平台名稱</div>
                 <div class="zone zone-main">2/3</div>
 
-                <!-- 右側：用 wrap 畫整條框線 -->
-                <div class="zone-sideWrap">
-                  <div class="zone-sideSpacer"></div>
-                  <div class="zone zone-side">1/3</div>
-                  <div class="zone zone-sideFill" aria-hidden="true"></div>
-                </div>
+                <!-- ✅ 右側整條 -->
+<div class="zone-sideWrap">
+  <div class="zone zone-side">1/3</div>
+  <div class="zone zone-sideBottom"></div>
+</div>
 
-                <div class="zone zone-ad">AD</div>
+<div class="zone zone-ad">AD</div>
               </div>
               <p class="text-center text-xs text-gray-500 mt-2">點擊左側項目，右側對應區塊會突出顯示</p>
             </div>
@@ -519,20 +515,20 @@
       demo.querySelectorAll(".active").forEach(el => el.classList.remove("active"));
     }
 
-    function setZoneActive(targetClass) {
-      clearActive();
-      demo.classList.add("has-active");
+   function setZoneActive(targetClass){
+  demo.querySelectorAll(".active").forEach(el => el.classList.remove("active"));
+  demo.classList.add("has-active");
 
-      // ✅ 右側 1/3：只亮外層 wrap（框線一整條到底、無中間線）
-      if (targetClass === "zone-side") {
-        demo.querySelector(".zone-sideWrap")?.classList.add("active");
-        return;
-      }
+  if(targetClass === "zone-side"){
+    demo.querySelector(".zone-sideWrap").classList.add("active");
+    return;
+  }
 
-      // 其他區塊（zone-main / zone-ad / zone-header）
-      const targetEl = demo.querySelector("." + targetClass);
-      if (targetEl) targetEl.classList.add("active");
-    }
+  const el = demo.querySelector("." + targetClass);
+  if(el){
+    el.classList.add("active");
+  }
+}
 
     hierList.querySelectorAll(".hier-item").forEach(item => {
       item.addEventListener("click", () => {
@@ -550,4 +546,5 @@
   </script>
 </body>
 </html>
+
 
