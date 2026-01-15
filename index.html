@@ -1008,7 +1008,6 @@
 
       <textarea
         class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        placeholder="（預留回答空間）"
         disabled
       ></textarea>
     </div>
@@ -1047,7 +1046,6 @@
 
       <textarea
         class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        placeholder="（我先幫你打底，可再編輯）&#10;建議先定義「跨品類共用的第一優先」與「可依品類調整的第二優先」。&#10;例如：保固/容量/介面屬於高通用規格，可優先；瓦數/讀寫速度則視品類。&#10;&#10;做法：建立一份「右側文字區排序表」，先用 80/20 原則定出共通排序，特殊品類再加例外規則。"
         disabled
       ></textarea>
     </div>
@@ -1086,7 +1084,6 @@
 
       <textarea
         class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        placeholder="（我先幫你打底，可再編輯）&#10;1) 建議建立「縮圖檢查規則」：1200→600→300 三段縮放後，關鍵字仍需可讀。&#10;2) 建議統一 Icon 模組的邊距、字級、行高與單位格式（W / Wh / MB/s），避免同義不同寫法。&#10;3) 建議建立「裁切安全區」：各平台可能裁切邊緣，重要資訊需落在安全區內。"
         disabled
       ></textarea>
     </div>
@@ -1097,8 +1094,7 @@
 
               <!-- Dynamic QA: Add Question Button -->
 <div class="mt-8 flex items-center justify-between">
-  <div class="text-sm text-gray-500">可新增更多討論題目，Q 儲存後鎖定，A 可持續編修。</div>
-  <button id="addQaBtn"
+   <button id="addQaBtn"
           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
     <span class="text-lg leading-none">＋</span>
     增加問題
@@ -1793,6 +1789,7 @@ initFixedAnswerBlocks();
   </script>
 </body>
 </html>
+
 
 
 
