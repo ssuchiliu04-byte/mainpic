@@ -973,32 +973,88 @@
             </div>
 
             <!-- 討論與調整（預留回答空間） -->
-            <div class="space-y-4">
-              <h3 class="text-xl font-extrabold text-gray-900">討論與調整</h3>
+         <!-- A：Q1 回應區（可儲存/可修改） -->
+<div class="mt-4" data-fixed-qa="q1">
+  <div class="flex items-center justify-between gap-3">
+    <div class="text-sm font-bold text-gray-700">A（回應）</div>
 
-              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-                <div class="font-extrabold text-gray-900">Q1. 產品配置的數量多寡</div>
-                <div class="text-sm text-gray-600 mt-1">
-                  當商品有數種顏色時是否全部配置？同一系列大小如 SSD / DRAM / PHD 的排法是否統一方向？記憶卡是否全數擺出？
-                </div>
-                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
-                          placeholder="（預留回答空間）"></textarea>
-              </div>
+    <div class="flex items-center gap-2">
+      <button class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+        儲存回應
+      </button>
+      <button class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200 transition">
+        取消
+      </button>
+      <button class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
+        編輯回應
+      </button>
+    </div>
+  </div>
 
-              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-                <div class="font-extrabold text-gray-900">Q2. 右方文字規範區域何為第一優先曝光？</div>
-                <div class="text-sm text-gray-600 mt-1">
-                  部分商品層級是保固為第一優先，是否需要統一標準，逐分類規劃亦或統一規範。
-                </div>
-                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
-                          placeholder="（預留回答空間）"></textarea>
-              </div>
+  <textarea
+    class="mt-3 w-full min-h-[120px] rounded-xl border border-gray-200 bg-white p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+    placeholder="（預留回答空間）"
+    disabled
+  ></textarea>
 
-              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-                <div class="font-extrabold text-gray-900">Q3. 是否有其他須調整的部分</div>
-                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
-                          placeholder="（預留回答空間）"></textarea>
-              </div>
+  <div class="mt-2 text-xs text-gray-400 fixed-a-savedat"></div>
+</div>
+
+
+              <!-- A：Q2 回應區（可儲存/可修改） -->
+<div class="mt-4" data-fixed-qa="q2">
+  <div class="flex items-center justify-between gap-3">
+    <div class="text-sm font-bold text-gray-700">A（回應）</div>
+
+    <div class="flex items-center gap-2">
+      <button class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+        儲存回應
+      </button>
+      <button class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200 transition">
+        取消
+      </button>
+      <button class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
+        編輯回應
+      </button>
+    </div>
+  </div>
+
+  <textarea
+    class="mt-3 w-full min-h-[120px] rounded-xl border border-gray-200 bg-white p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+    placeholder="（預留回答空間）"
+    disabled
+  ></textarea>
+
+  <div class="mt-2 text-xs text-gray-400 fixed-a-savedat"></div>
+</div>
+
+              <!-- A：Q3 回應區（可儲存/可修改） -->
+<div class="mt-4" data-fixed-qa="q3">
+  <div class="flex items-center justify-between gap-3">
+    <div class="text-sm font-bold text-gray-700">A（回應）</div>
+
+    <div class="flex items-center gap-2">
+      <button class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+        儲存回應
+      </button>
+      <button class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200 transition">
+        取消
+      </button>
+      <button class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
+        編輯回應
+      </button>
+    </div>
+  </div>
+
+  <textarea
+    class="mt-3 w-full min-h-[120px] rounded-xl border border-gray-200 bg-white p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+    placeholder="（預留回答空間）"
+    disabled
+  ></textarea>
+
+  <div class="mt-2 text-xs text-gray-400 fixed-a-savedat"></div>
+</div>
+
               <!-- Dynamic QA: Add Question Button -->
 <div class="mt-8 flex items-center justify-between">
   <div class="text-sm text-gray-500">可新增更多討論題目，Q 儲存後鎖定，A 可持續編修。</div>
@@ -1535,8 +1591,97 @@ dynamicQaList?.addEventListener("click", (e) => {
 
 // 初始化
 renderQAs();
+/* =========================
+   Fixed Q1/Q2/Q3 Answer Save/Edit
+   - A 可儲存、可再次編輯
+========================= */
+const FIXED_A_KEY = "sp_guideline_fixed_answers_v1";
+
+function loadFixedAnswers() {
+  try {
+    const raw = localStorage.getItem(FIXED_A_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveFixedAnswers(obj) {
+  localStorage.setItem(FIXED_A_KEY, JSON.stringify(obj));
+}
+
+function initFixedAnswerBlocks() {
+  const store = loadFixedAnswers();
+  const blocks = document.querySelectorAll("[data-fixed-qa]");
+
+  blocks.forEach(block => {
+    const key = block.getAttribute("data-fixed-qa"); // q1/q2/q3
+    const ta = block.querySelector("textarea");
+    const editBtn = block.querySelector(".btn-edit-a");
+    const saveBtn = block.querySelector(".btn-save-a");
+    const cancelBtn = block.querySelector(".btn-cancel-a");
+    const savedAtEl = block.querySelector(".fixed-a-savedat");
+
+    // 初始載入
+    const saved = store[key];
+    if (saved?.text) ta.value = saved.text;
+    if (saved?.savedAt) savedAtEl.textContent = `最後儲存：${saved.savedAt}`;
+
+    // 預設：不可編輯
+    ta.disabled = true;
+    saveBtn.classList.add("hidden");
+    cancelBtn.classList.add("hidden");
+    editBtn.classList.remove("hidden");
+
+    // 編輯
+    editBtn.addEventListener("click", () => {
+      // 記住進入編輯前的值（取消用）
+      ta.dataset.beforeEdit = ta.value;
+      ta.disabled = false;
+      ta.focus();
+
+      saveBtn.classList.remove("hidden");
+      cancelBtn.classList.remove("hidden");
+      editBtn.classList.add("hidden");
+    });
+
+    // 取消
+    cancelBtn.addEventListener("click", () => {
+      ta.value = ta.dataset.beforeEdit ?? ta.value;
+      ta.disabled = true;
+
+      saveBtn.classList.add("hidden");
+      cancelBtn.classList.add("hidden");
+      editBtn.classList.remove("hidden");
+    });
+
+    // 儲存
+    saveBtn.addEventListener("click", () => {
+      const text = (ta.value ?? "").trim();
+      const now = new Date().toLocaleString("zh-Hant", {
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit"
+      });
+
+      const nextStore = loadFixedAnswers();
+      nextStore[key] = { text, savedAt: now };
+      saveFixedAnswers(nextStore);
+
+      savedAtEl.textContent = `最後儲存：${now}`;
+
+      ta.disabled = true;
+      saveBtn.classList.add("hidden");
+      cancelBtn.classList.add("hidden");
+      editBtn.classList.remove("hidden");
+    });
+  });
+}
+
+// 初始化固定Q的A區塊
+initFixedAnswerBlocks();
 
   </script>
 </body>
 </html>
+
 
