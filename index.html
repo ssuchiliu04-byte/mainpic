@@ -11,9 +11,38 @@
   <style>
     html { scroll-behavior: smooth; }
 
-    /* === [新增] Hierarchy demo highlight === */
-    .demo-area {
-      display: grid;
+    /* ===== Tabs (四個頁面) ===== */
+    .tab-panel{ display:none; }
+    .tab-panel.is-active{ display:block; }
+
+    /* ===== Dropdown (規範總覽) ===== */
+    .dropdown{ position:relative; }
+    .dropdown-menu{ display:none; }
+    .dropdown.is-open .dropdown-menu{ display:block; }
+
+    .navbtn{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.55rem .9rem;
+      border-radius:.75rem;
+      font-weight:700; font-size:.9rem;
+      border:1px solid rgba(229,231,235,1);
+      background:white;
+      transition: all .15s ease;
+      color: rgb(55 65 81);
+    }
+    .navbtn:hover{ background: rgb(249 250 251); }
+    .navbtn.is-active{
+      border-color: rgba(37,99,235,.55);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+      color: rgb(29 78 216);
+    }
+
+    /* ===== Lightbox ===== */
+    .lb-hidden{ display:none; }
+
+    /* ===== Hierarchy demo highlight（修正：右側紅色為同一塊延伸到底，沒有中間分隔線） ===== */
+    .demo-area{
+      display:grid;
       grid-template-columns: 2fr 1fr;
       grid-template-rows: 86px 1fr 86px;
       border-radius: 16px;
@@ -21,87 +50,78 @@
       background: #e5e7eb;
       min-height: 520px;
     }
-
-    .zone {
+    .zone{
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
       transition: all .22s ease;
       filter: brightness(.86);
-      user-select: none;
+      user-select:none;
     }
-
-    .zone-header {
+    .zone-header{
       grid-column: 1 / span 2;
-      background: #0f2f57; /* 深藍 */
-      color: #fff;
-      font-size: 28px;
-      letter-spacing: .04em;
+      background: #0f2f57;
+      color:#fff;
+      font-size:28px;
+      letter-spacing:.04em;
     }
-
-    .zone-main {
-      background: #f7ff3c; /* 黃 */
-      font-size: 36px;
+    .zone-main{
+      background:#f7ff3c;
+      font-size:36px;
     }
-
-    .zone-side {
-      background: #e30000; /* 紅 */
-      color: #fff;
-      font-size: 34px;
-    }
-
-    .zone-ad {
-      grid-column: 1 / span 1;
-      background: #ff8c2a; /* 橘 */
-      font-size: 28px;
-    }
-
-    .zone-sideFill {
+    /* 右側 1/3：直接跨 row2 + row3，確保「一整條延伸到底」 */
+    .zone-side{
+      background:#e30000;
+      color:#fff;
+      font-size:34px;
       grid-column: 2 / span 1;
+      grid-row: 2 / span 2;
+    }
+    .zone-ad{
+      grid-column: 1 / span 1;
       grid-row: 3 / span 1;
-      background: #e30000; /* 右側紅延伸區 */
+      background:#ff8c2a;
+      font-size:28px;
     }
 
-    /* 高亮狀態：亮度+框線 */
-    .zone.active {
+    /* 高亮狀態 */
+    .zone.active{
       filter: brightness(1.15);
       box-shadow: inset 0 0 0 4px #2563eb;
-      z-index: 2;
+      z-index:2;
     }
-
-    /* 其他區塊淡化（當有選擇時） */
-    .demo-area.has-active .zone:not(.active) {
+    .demo-area.has-active .zone:not(.active){
       filter: brightness(.78);
-      opacity: .88;
+      opacity:.88;
     }
 
-    /* 左側可點擊狀態 */
-    .hier-item {
-      cursor: pointer;
-      transition: all .18s ease;
+    /* 左側 item */
+    .hier-item{ cursor:pointer; transition: all .18s ease; }
+    .hier-item:hover{ transform: translateY(-1px); }
+    .hier-item.is-active{ box-shadow: 0 0 0 2px rgba(37,99,235,.25); }
+
+    /* 主圖修正：區塊標題樣式 */
+    .h2line{ border-bottom:1px solid rgb(229 231 235); padding-bottom:.75rem; margin-bottom:1.25rem; }
+    .quote-strong{
+      background: rgb(254 249 195);
+      border: 1px solid rgb(253 230 138);
+      padding: .9rem 1rem;
+      border-radius: .75rem;
+      font-weight: 800;
+      color: rgb(120 53 15);
+      text-align:center;
     }
-    .hier-item:hover {
-      transform: translateY(-1px);
-    }
-    .hier-item.is-active {
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, .25);
-    }
-    /* === [新增 end] === */
   </style>
 </head>
 
 <body class="font-sans text-gray-800 bg-gray-50 min-h-screen flex flex-col relative">
 
   <!-- Lightbox -->
-  <div id="lightbox"
-       class="fixed inset-0 z-[100] bg-black/90 hidden items-center justify-center p-4 cursor-pointer">
+  <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 lb-hidden items-center justify-center p-4 cursor-pointer">
     <div class="relative max-w-5xl max-h-screen">
-      <button id="lightboxClose"
-              class="absolute -top-10 right-0 text-white hover:text-gray-300"
-              aria-label="Close">
-        <!-- X icon -->
+      <button id="lightboxClose" class="absolute -top-10 right-0 text-white hover:text-gray-300" aria-label="Close">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
@@ -118,7 +138,6 @@
       <div class="flex justify-between items-center h-16">
         <div class="flex-shrink-0 flex items-center gap-2">
           <div class="bg-blue-900 p-1.5 rounded-md">
-            <!-- Layout icon -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
@@ -127,24 +146,38 @@
           <span class="font-bold text-lg tracking-tight text-gray-900">SP 電商主圖規範</span>
         </div>
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8">
-          <a href="#overview" class="text-gray-600 hover:text-blue-700 font-medium text-sm transition">規範總覽</a>
-          <a href="#hierarchy" class="text-gray-600 hover:text-blue-700 font-medium text-sm transition">版面層級</a>
-          <a href="#grid" class="text-gray-600 hover:text-blue-700 font-medium text-sm transition">網格系統</a>
-          <a href="#layouts" class="text-gray-600 hover:text-blue-700 font-medium text-sm transition">排版方案</a>
-          <a href="#discussion" class="text-gray-600 hover:text-blue-700 font-medium text-sm transition">討論與調整</a>
+        <!-- Desktop Tabs -->
+        <div class="hidden md:flex items-center gap-3">
+          <!-- 規範總覽 (dropdown) -->
+          <div class="dropdown" id="overviewDropdown">
+            <button class="navbtn is-active" id="btnOverview" type="button">
+              規範總覽
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="dropdown-menu absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#overview">標準尺寸規範</button>
+              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#hierarchy">版面層級</button>
+              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#grid">網格系統</button>
+              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#layouts">排版方案</button>
+              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#discussion">討論與調整</button>
+            </div>
+          </div>
+
+          <button class="navbtn" id="btnPicfix" type="button">主圖修正</button>
+          <button class="navbtn" id="btnHowto" type="button">實際操作</button>
+          <button class="navbtn" id="btnFollow" type="button">後續調整</button>
         </div>
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">
           <button id="menuBtn" class="text-gray-600 hover:text-gray-900 p-2" aria-label="Toggle menu">
-            <!-- Menu icon -->
             <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
             </svg>
-            <!-- X icon (hidden) -->
             <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
@@ -157,11 +190,26 @@
     <!-- Mobile Menu Dropdown -->
     <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100 hidden absolute w-full shadow-lg">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-700 hover:bg-gray-50">規範總覽</a>
-        <a href="#hierarchy" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-700 hover:bg-gray-50">版面層級</a>
-        <a href="#grid" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-700 hover:bg-gray-50">網格系統</a>
-        <a href="#layouts" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-700 hover:bg-gray-50">排版方案</a>
-        <a href="#discussion" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-700 hover:bg-gray-50">討論與調整</a>
+        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-semibold text-blue-700 bg-blue-50"
+                data-tab="guide">規範總覽</button>
+
+        <div class="px-3 pb-2">
+          <div class="text-xs text-gray-400 mb-2">總覽內快速跳轉</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#overview">尺寸</button>
+            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#hierarchy">層級</button>
+            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#grid">網格</button>
+            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#layouts">排版</button>
+            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50 col-span-2" data-jump="#discussion">討論</button>
+          </div>
+        </div>
+
+        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+                data-tab="picfix">主圖修正</button>
+        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+                data-tab="howto">實際操作</button>
+        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+                data-tab="follow">後續調整</button>
       </div>
     </div>
   </nav>
@@ -186,492 +234,845 @@
 
   <main class="flex-grow">
 
-    <!-- Overview -->
-    <section id="overview" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <div class="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
-          <!-- Ruler icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2Z"/>
-            <path d="M7 6v2"/><path d="M11 6v2"/><path d="M15 6v2"/><path d="M19 6v2"/>
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-900">標準尺寸規範</h2>
-        </div>
+    <!-- ===================== TAB 1：規範總覽（原本內容） ===================== -->
+    <div id="tab-guide" class="tab-panel is-active">
 
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <div class="flex items-baseline gap-2 mb-4">
-              <span class="text-5xl font-bold text-gray-900">1200</span>
-              <span class="text-2xl text-gray-500">x</span>
-              <span class="text-5xl font-bold text-gray-900">1200</span>
-              <span class="text-xl text-gray-500 ml-2">px</span>
-            </div>
-            <p class="text-gray-600 mb-6">此為製作標準母檔尺寸。其餘電商平台視需求等比縮放。</p>
-            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm text-blue-800">
-              <span class="font-bold">適用平台：</span> Shopee 蝦皮購物、PChome 24h、Yahoo 購物中心、MOMO 購物網
-            </div>
-          </div>
-
-          <div class="grid grid-cols-3 gap-4">
-            <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
-              <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
-                <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/shopee.png" alt="Shopee"
-                     class="w-full h-full object-contain" />
-              </div>
-              <span class="text-xs font-medium text-gray-500">Shopee</span>
-            </div>
-
-            <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
-              <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
-                <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/pchome24.png" alt="PChome"
-                     class="w-full h-full object-contain" />
-              </div>
-              <span class="text-xs font-medium text-gray-500">PChome</span>
-            </div>
-
-            <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
-              <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
-                <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/MOMO.png" alt="MOMO"
-                     class="w-full h-full object-contain" />
-              </div>
-              <span class="text-xs font-medium text-gray-500">MOMO</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Hierarchy -->
-    <section id="hierarchy" class="py-16 bg-white border-y border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8">
-          <!-- Layers icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m12 2 10 6-10 6L2 8l10-6Z"/><path d="m2 14 10 6 10-6"/><path d="m2 8 10 6 10-6"/>
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-900">一、確認版面重點層級</h2>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-12">
-          <div class="space-y-6">
-            <p class="text-gray-600">
-              版面設計需遵循資訊優先級，確保消費者在滑動瀏覽時能第一時間接收核心訊息。
-            </p>
-
-            <!-- 左側：加上 hier-item + data-target -->
-            <div class="space-y-4" id="hierarchyList">
-              <div class="hier-item flex items-center p-4 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg is-active"
-                   data-target="zone-main">
-                <div class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full font-bold text-xl mr-4">1</div>
-                <div>
-                  <h3 class="font-bold text-gray-900">產品及容量</h3>
-                  <p class="text-sm text-gray-600">呈現大小：最大 (核心識別)</p>
-                </div>
-              </div>
-
-              <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg"
-                   data-target="zone-side">
-                <div class="w-12 h-12 flex items-center justify-center bg-gray-400 text-white rounded-full font-bold text-xl mr-4">2</div>
-                <div>
-                  <h3 class="font-bold text-gray-900">保固及規格</h3>
-                  <p class="text-sm text-gray-600">呈現大小：中等</p>
-                </div>
-              </div>
-
-              <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-300 rounded-r-lg"
-                   data-target="zone-ad">
-                <div class="w-12 h-12 flex items-center justify-center bg-gray-300 text-white rounded-full font-bold text-xl mr-4">3</div>
-                <div>
-                  <h3 class="font-bold text-gray-900">廣告AD</h3>
-                  <p class="text-sm text-gray-600">呈現大小：中等 (電商平台預設廣告範圍)</p>
-                </div>
-              </div>
-
-              <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-200 rounded-r-lg opacity-70"
-                   data-target="zone-none">
-                <div class="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-500 rounded-full font-bold text-xl mr-4">4</div>
-                <div>
-                  <h3 class="font-bold text-gray-900">其餘輔助銷售</h3>
-                  <p class="text-sm text-gray-600">可刪去或呈現畫面極小</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 右側：用可高亮的示意區塊（不再依賴圖片） -->
-          <div>
-            <div class="bg-gray-100 rounded-xl overflow-hidden shadow-inner border border-gray-200 p-2">
-              <div id="hierDemo" class="demo-area has-active bg-white">
-                <div class="zone zone-header">平台名稱</div>
-                <div class="zone zone-main active">2/3</div>
-                <div class="zone zone-side">1/3</div>
-                <div class="zone zone-ad">AD</div>
-                <div class="zone zone-sideFill" aria-hidden="true"></div>
-              </div>
-              <p class="text-center text-xs text-gray-500 mt-2">點擊左側項目，右側對應區塊會突出顯示</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Grid -->
-    <section id="grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-8">
-        <!-- Grid icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-        </svg>
-        <h2 class="text-2xl font-bold text-gray-900">1.1 版面結構 (Grid System)</h2>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-8 mb-16">
-        <div class="lg:col-span-5">
-          <img
-            id="gridAllocation"
-            src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_allocation.png"
-            alt="Grid Allocation"
-            class="w-full rounded-xl shadow-lg border border-gray-100 cursor-zoom-in hover:scale-110 transition duration-300 z-10"
-            data-lightbox="true"
-          />
-          <div class="text-center text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
-            <!-- Zoom icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none"
+      <!-- Overview -->
+      <section id="overview" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div class="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/>
+              <path d="M21 16V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2Z"/>
+              <path d="M7 6v2"/><path d="M11 6v2"/><path d="M15 6v2"/><path d="M19 6v2"/>
             </svg>
-            點擊放大
+            <h2 class="text-2xl font-bold text-gray-900">標準尺寸規範</h2>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div class="flex items-baseline gap-2 mb-4">
+                <span class="text-5xl font-bold text-gray-900">1200</span>
+                <span class="text-2xl text-gray-500">x</span>
+                <span class="text-5xl font-bold text-gray-900">1200</span>
+                <span class="text-xl text-gray-500 ml-2">px</span>
+              </div>
+              <p class="text-gray-600 mb-6">此為製作標準母檔尺寸。其餘電商平台視需求等比縮放。</p>
+              <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm text-blue-800">
+                <span class="font-bold">適用平台：</span> Shopee 蝦皮購物、PChome 24h、Yahoo 購物中心、MOMO 購物網
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+              <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
+                <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
+                  <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/shopee.png" alt="Shopee"
+                       class="w-full h-full object-contain" />
+                </div>
+                <span class="text-xs font-medium text-gray-500">Shopee</span>
+              </div>
+
+              <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
+                <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
+                  <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/pchome24.png" alt="PChome"
+                       class="w-full h-full object-contain" />
+                </div>
+                <span class="text-xs font-medium text-gray-500">PChome</span>
+              </div>
+
+              <div class="bg-gray-50 p-2 rounded-lg border border-gray-200 text-center">
+                <div class="aspect-square bg-white rounded border border-gray-100 mb-2 overflow-hidden flex items-center justify-center">
+                  <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/MOMO.png" alt="MOMO"
+                       class="w-full h-full object-contain" />
+                </div>
+                <span class="text-xs font-medium text-gray-500">MOMO</span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="lg:col-span-7 space-y-8">
-
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">頂部：品牌識別條</h3>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <span class="block text-gray-500 mb-1">尺寸</span>
-                <span class="font-mono font-medium text-gray-900">1200 x 120 px</span>
-              </div>
-              <div>
-                <span class="block text-gray-500 mb-1">字體規範</span>
-                <span class="font-medium text-gray-900">Noto Sans TC - Black / 60 pt</span>
-                <div class="text-xs text-gray-400 mt-1">VA 0 / 與 SP Logo 置中</div>
-              </div>
-            </div>
+      <!-- Hierarchy -->
+      <section id="hierarchy" class="py-16 bg-white border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-3 mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 2 10 6-10 6L2 8l10-6Z"/><path d="m2 14 10 6 10-6"/><path d="m2 8 10 6 10-6"/>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">一、確認版面重點層級</h2>
           </div>
 
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">中間產品區域 (840 x 960 px)</h3>
-            <div class="flex flex-col md:flex-row gap-6">
-              <div class="flex-1">
-                <h4 class="font-semibold text-blue-700 mb-2">左側 2/3 產品區</h4>
-                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                  <li>產品展示 (700 x 700 px)</li>
-                  <li>容量標示</li>
-                  <li>得獎資訊 (220 x 110 px)</li>
-                  <li>產品型號 (530 x 70 px)</li>
-                </ul>
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="space-y-6">
+              <p class="text-gray-600">
+                版面設計需遵循資訊優先級，確保消費者在滑動瀏覽時能第一時間接收核心訊息。
+              </p>
+
+              <div class="space-y-4" id="hierarchyList">
+                <div class="hier-item flex items-center p-4 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg is-active"
+                     data-target="zone-main">
+                  <div class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full font-bold text-xl mr-4">1</div>
+                  <div>
+                    <h3 class="font-bold text-gray-900">產品及容量</h3>
+                    <p class="text-sm text-gray-600">呈現大小：最大 (核心識別)</p>
+                  </div>
+                </div>
+
+                <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg"
+                     data-target="zone-side">
+                  <div class="w-12 h-12 flex items-center justify-center bg-gray-400 text-white rounded-full font-bold text-xl mr-4">2</div>
+                  <div>
+                    <h3 class="font-bold text-gray-900">保固及規格</h3>
+                    <p class="text-sm text-gray-600">呈現大小：中等</p>
+                  </div>
+                </div>
+
+                <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-300 rounded-r-lg"
+                     data-target="zone-ad">
+                  <div class="w-12 h-12 flex items-center justify-center bg-gray-300 text-white rounded-full font-bold text-xl mr-4">3</div>
+                  <div>
+                    <h3 class="font-bold text-gray-900">廣告AD</h3>
+                    <p class="text-sm text-gray-600">呈現大小：中等 (電商平台預設廣告範圍)</p>
+                  </div>
+                </div>
+
+                <div class="hier-item flex items-center p-4 bg-gray-50 border-l-4 border-gray-200 rounded-r-lg opacity-70"
+                     data-target="zone-none">
+                  <div class="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-500 rounded-full font-bold text-xl mr-4">4</div>
+                  <div>
+                    <h3 class="font-bold text-gray-900">其餘輔助銷售</h3>
+                    <p class="text-sm text-gray-600">可刪去或呈現畫面極小</p>
+                  </div>
+                </div>
               </div>
-              <div class="flex-1">
-                <h4 class="font-semibold text-blue-700 mb-2">右側 1/3 資訊區</h4>
-                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                  <li>文字規格資訊</li>
-                  <li>垂直排列</li>
-                  <li>尺寸：360 x 1080 px</li>
-                </ul>
+            </div>
+
+            <div>
+              <div class="bg-gray-100 rounded-xl overflow-hidden shadow-inner border border-gray-200 p-2">
+                <div id="hierDemo" class="demo-area has-active bg-white">
+                  <div class="zone zone-header">平台名稱</div>
+                  <div class="zone zone-main active">2/3</div>
+                  <div class="zone zone-side">1/3</div>
+                  <div class="zone zone-ad">AD</div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-2">點擊左側項目，右側對應區塊會突出顯示</p>
               </div>
             </div>
 
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_size.png"
-                   alt="Size Detail"
-                   class="w-full rounded border border-gray-100 hover:scale-105 transition duration-300 origin-center" />
-            </div>
           </div>
-
-          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">底部：廣告預留區</h3>
-            <div class="text-sm">
-              <span class="block text-gray-500 mb-1">尺寸</span>
-              <span class="font-mono font-medium text-gray-900">840 x 120 px</span>
-              <p class="text-gray-600 mt-2">作為電商廣告 AD 展示預留空間</p>
-            </div>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Layouts -->
-    <section id="layouts" class="py-16 bg-white border-y border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Grid -->
+      <section id="grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-3 mb-8">
-          <!-- Layout icon -->
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
           </svg>
-          <h2 class="text-2xl font-bold text-gray-900">二、內容呈現規劃與討論</h2>
+          <h2 class="text-2xl font-bold text-gray-900">1.1 版面結構 (Grid System)</h2>
         </div>
 
-        <!-- Layout A -->
-        <div class="mb-20">
-          <div class="flex flex-col md:flex-row gap-8 mb-8">
-            <div class="md:w-1/2">
-              <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">A</span>
-                排版一：產品 + 特色 Icon (無文字)
-              </h3>
-
-              <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl mb-6">
-                <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
-                  <!-- Alert icon -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
-                  </svg>
-                  為何將特色 Icon 去除文字？
-                </h4>
-
-                <p class="text-sm text-yellow-800 leading-relaxed mb-4">
-                  Icon 理想上應具備識別辨識的功能。如果需要將文字一併排列才能解釋此 Icon，則表示該 Icon 單獨的語意強度不足。
-                  在主圖資訊密集的介面中，加上文字會迫使我們放大或加粗文字，導致畫面混亂。
-                </p>
-
-                <div class="bg-white p-3 rounded border border-yellow-100">
-                  <strong class="text-gray-900 block mb-1">解決方式：</strong>
-                  <p class="text-gray-600 text-sm">僅使用辨識度高的直覺 Icon。需要文字解釋的部分，納入右側「文字規格資訊區」。</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="md:w-1/2 grid grid-cols-2 gap-4">
-              <div class="relative group z-0 hover:z-50">
-                <img
-                  src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_Icon_demo_no_word_2.png"
-                  alt="Demo No Word"
-                  class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
-                />
-              </div>
-              <div class="relative group z-0 hover:z-50">
-                <img
-                  src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_Icon_demo_2.png"
-                  alt="Demo With Word"
-                  class="w-full rounded-lg shadow-md opacity-60 grayscale hover:grayscale-0 transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
-                />
-              </div>
-              <p class="col-span-2 text-center text-xs text-gray-500">
-                (懸停可放大檢視) 左：無文字版本 (採用) / 右：有文字版本 (較雜亂)
-              </p>
-            </div>
-          </div>
-
-          <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-            <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">可使用的直覺性 Icon 範例</h4>
-            <div id="iconsGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4"></div>
-          </div>
-        </div>
-
-        <!-- Layout B -->
-        <div>
-          <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2 order-2 md:order-1">
-              <div class="grid grid-cols-2 gap-4">
-                <div class="relative group z-0 hover:z-50">
-                  <img
-                    src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_capacity_demo.png"
-                    class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
-                    alt="Capacity Demo 1"
-                  />
-                </div>
-                <div class="relative group z-0 hover:z-50">
-                  <img
-                    src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_capacity_demo_2.png"
-                    class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
-                    alt="Capacity Demo 2"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="md:w-1/2 order-1 md:order-2">
-              <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">B</span>
-                排版二：產品 + 容量
-              </h3>
-
-              <p class="text-gray-600 mb-6">
-                將產品及容量安排在同一側。由於產品版面區域大，消費者第一眼即能理解此產品所擁有的容量，再從右側規格細讀資訊。
-              </p>
-
-              <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
-                <h4 class="font-bold text-blue-900 mb-2">優點分析</h4>
-                <ul class="space-y-2 text-sm text-blue-800">
-                  <li class="flex items-start gap-2">
-                    <!-- Check icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 text-blue-600" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
-                    </svg>
-                    <span>釋放右側空間：將容量與產品放在一起，右側「文字規格資訊區」空間變大。</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 text-blue-600" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
-                    </svg>
-                    <span>強化數據呈現：可將 Icon + 文案放大使用，提高易讀性。</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Discussion -->
-    <section id="discussion" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-12">
-        <!-- Bag icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
-        </svg>
-        <h2 class="text-2xl font-bold text-gray-900">三、討論與調整</h2>
-      </div>
-
-      <div class="space-y-12">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="p-8 border-b border-gray-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Q1. 關於視覺舒適度與競品分析</h3>
-            <p class="text-gray-600 mb-6">
-              主圖排版應以「視覺舒適」及「重點瀏覽清晰」為主。如將所有特色都做為賣點強調，版面會過於凌亂。
-              競品常有畫面過於擁擠、銷售重點隨意擺放無瀏覽順序的問題。
-            </p>
-
-            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-              <span class="font-bold text-gray-900">結論：</span>
-              <span class="text-gray-700">SP 在設計上應以「產品、規格(容量/速度/接頭)」為主，其餘輔助資訊可簡化或刪除。</span>
-            </div>
-
-            <h4 class="text-sm font-bold text-gray-500 mb-4 flex items-center gap-2">
-              <!-- Zoom icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+        <div class="grid lg:grid-cols-12 gap-8 mb-16">
+          <div class="lg:col-span-5">
+            <img
+              id="gridAllocation"
+              src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_allocation.png"
+              alt="Grid Allocation"
+              class="w-full rounded-xl shadow-lg border border-gray-100 cursor-zoom-in hover:scale-110 transition duration-300 z-10"
+              data-lightbox="true"
+            />
+            <div class="text-center text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/>
               </svg>
-              競品範例 (點擊放大檢視)：
-            </h4>
-
-            <div id="competitorGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3"></div>
-          </div>
-        </div>
-
-       <!-- Q2 block (replace your existing Q2 area with this whole block) -->
-<div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-  <div class="p-8">
-    <h3 class="text-xl font-bold text-gray-900 mb-6">Q2. 主圖上的各項區域規範 (與設計師們討論)</h3>
-
-    <div class="space-y-8">
-
-      <!-- 1 -->
-      <div class="flex gap-4 items-start">
-        <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-center font-bold flex-shrink-0">
-          1
-        </div>
-        <div class="w-full">
-          <h4 class="font-bold text-gray-900 text-lg">定義區域尺寸 - 排版上是否有彈性?</h4>
-          <p class="text-gray-600 mt-1">需確認在不同產品類型下，既定的網格區域是否允許微調。</p>
-
-          <!-- Answer -->
-          <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
-            <p class="text-sm text-blue-900 leading-relaxed">
-              <span class="font-bold">回答：</span>
-              盡量將產品限縮在 <span class="font-semibold">700x700px</span> 內以確保每張主圖的比例準確，
-              如遇到多色多角度都可再調整方向、旋轉位置等方式設計。
-              <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="flex gap-4 items-start">
-        <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-center font-bold flex-shrink-0">
-          2
-        </div>
-        <div class="w-full">
-          <h4 class="font-bold text-gray-900 text-lg">文字規範 - 字體共用性</h4>
-          <p class="text-gray-600 mt-1 mb-2">
-            各設計師目前電腦的文字字體是否能共用 (Noto Sans TC 新版 / Noto Sans CJK 舊版)。
-          </p>
-
-          <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-sm text-yellow-900 mb-3">
-            <div class="flex items-start gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 flex-shrink-0" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
-              </svg>
-              <span>
-                <strong>注意：</strong> CJK 系列在部分微軟系統上可能有掉字/閃退紀錄，是否日後不使用可討論。
-              </span>
+              點擊放大
             </div>
           </div>
 
-          <div class="max-w-md">
-            <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Noto-sans-TC.png"
-                 class="w-full rounded border border-gray-200" alt="Font Source" />
-            <p class="text-xs text-gray-400 mt-1">資訊來源：GPT GOOGLE font</p>
-          </div>
+          <div class="lg:col-span-7 space-y-8">
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">頂部：品牌識別條</h3>
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="block text-gray-500 mb-1">尺寸</span>
+                  <span class="font-mono font-medium text-gray-900">1200 x 120 px</span>
+                </div>
+                <div>
+                  <span class="block text-gray-500 mb-1">字體規範</span>
+                  <span class="font-medium text-gray-900">Noto Sans TC - Black / 60 pt</span>
+                  <div class="text-xs text-gray-400 mt-1">VA 0 / 與 SP Logo 置中</div>
+                </div>
+              </div>
+            </div>
 
-          <!-- Answer -->
-          <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
-            <p class="text-sm text-blue-900 leading-relaxed">
-              <span class="font-bold">回答：</span>
-              請設計師們確定電腦內部的 Noto Sans 為哪一個？
-              並從 Google Fonts 安裝最新的 <span class="font-semibold">Noto Sans TC / KR / JP</span> 等語系以避免漏字。
-              <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
-            </p>
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">中間產品區域 (840 x 960 px)</h3>
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex-1">
+                  <h4 class="font-semibold text-blue-700 mb-2">左側 2/3 產品區</h4>
+                  <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    <li>產品展示 (700 x 700 px)</li>
+                    <li>容量標示</li>
+                    <li>得獎資訊 (220 x 110 px)</li>
+                    <li>產品型號 (530 x 70 px)</li>
+                  </ul>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-blue-700 mb-2">右側 1/3 資訊區</h4>
+                  <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    <li>文字規格資訊</li>
+                    <li>垂直排列</li>
+                    <li>尺寸：360 x 1080 px</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-4 border-t border-gray-100">
+                <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_size.png"
+                     alt="Size Detail"
+                     class="w-full rounded border border-gray-100 hover:scale-105 transition duration-300 origin-center" />
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">底部：廣告預留區</h3>
+              <div class="text-sm">
+                <span class="block text-gray-500 mb-1">尺寸</span>
+                <span class="font-mono font-medium text-gray-900">840 x 120 px</span>
+                <p class="text-gray-600 mt-2">作為電商廣告 AD 展示預留空間</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- 3 -->
-      <div class="flex gap-4 items-start">
-        <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-center font-bold flex-shrink-0">
-          3
-        </div>
-        <div class="w-full">
-          <h4 class="font-bold text-gray-900 text-lg">Icon 的識別性定義</h4>
-          <p class="text-gray-600 mt-1">
-            「Icon + 文案」以及「Icon 可獨立閱讀」，後者在主圖上的使用性較高，但就有可能需要重製。這部分或許需要跟業務行銷溝通。
-          </p>
-
-          <!-- Answer -->
-          <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
-            <p class="text-sm text-blue-900 leading-relaxed">
-              <span class="font-bold">回答：</span>
-              Icon 可持續性優化識別性更高，如遇到窗口提供較少的產品優勢重點也可請對方補充，
-              並將右側的文字規格區域內的像是保固 / 瓦數 / 讀取 / WH 等通用性較高的圖示再標準化後，
-              均可共用在各類別。
-              <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
-            </p>
+      <!-- Layouts -->
+      <section id="layouts" class="py-16 bg-white border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-3 mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">二、內容呈現規劃與討論</h2>
           </div>
-        </div>
-      </div>
 
+          <div class="mb-20">
+            <div class="flex flex-col md:flex-row gap-8 mb-8">
+              <div class="md:w-1/2">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <span class="bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">A</span>
+                  排版一：產品 + 特色 Icon (無文字)
+                </h3>
+
+                <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl mb-6">
+                  <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+                    </svg>
+                    為何將特色 Icon 去除文字？
+                  </h4>
+
+                  <p class="text-sm text-yellow-800 leading-relaxed mb-4">
+                    Icon 理想上應具備識別辨識的功能。如果需要將文字一併排列才能解釋此 Icon，則表示該 Icon 單獨的語意強度不足。
+                    在主圖資訊密集的介面中，加上文字會迫使我們放大或加粗文字，導致畫面混亂。
+                  </p>
+
+                  <div class="bg-white p-3 rounded border border-yellow-100">
+                    <strong class="text-gray-900 block mb-1">解決方式：</strong>
+                    <p class="text-gray-600 text-sm">僅使用辨識度高的直覺 Icon。需要文字解釋的部分，納入右側「文字規格資訊區」。</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                <div class="relative group z-0 hover:z-50">
+                  <img
+                    src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_Icon_demo_no_word_2.png"
+                    alt="Demo No Word"
+                    class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
+                  />
+                </div>
+                <div class="relative group z-0 hover:z-50">
+                  <img
+                    src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_Icon_demo_2.png"
+                    alt="Demo With Word"
+                    class="w-full rounded-lg shadow-md opacity-60 grayscale hover:grayscale-0 transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
+                  />
+                </div>
+                <p class="col-span-2 text-center text-xs text-gray-500">
+                  (懸停可放大檢視) 左：無文字版本 (採用) / 右：有文字版本 (較雜亂)
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">可使用的直覺性 Icon 範例</h4>
+              <div id="iconsGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex flex-col md:flex-row gap-8">
+              <div class="md:w-1/2 order-2 md:order-1">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="relative group z-0 hover:z-50">
+                    <img
+                      src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_capacity_demo.png"
+                      class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
+                      alt="Capacity Demo 1"
+                    />
+                  </div>
+                  <div class="relative group z-0 hover:z-50">
+                    <img
+                      src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_capacity_demo_2.png"
+                      class="w-full rounded-lg shadow-md transform transition duration-300 group-hover:scale-150 group-hover:shadow-2xl bg-white"
+                      alt="Capacity Demo 2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="md:w-1/2 order-1 md:order-2">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <span class="bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">B</span>
+                  排版二：產品 + 容量
+                </h3>
+
+                <p class="text-gray-600 mb-6">
+                  將產品及容量安排在同一側。由於產品版面區域大，消費者第一眼即能理解此產品所擁有的容量，再從右側規格細讀資訊。
+                </p>
+
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                  <h4 class="font-bold text-blue-900 mb-2">優點分析</h4>
+                  <ul class="space-y-2 text-sm text-blue-800">
+                    <li class="flex items-start gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 text-blue-600" viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                      </svg>
+                      <span>釋放右側空間：將容量與產品放在一起，右側「文字規格資訊區」空間變大。</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 text-blue-600" viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                      </svg>
+                      <span>強化數據呈現：可將 Icon + 文案放大使用，提高易讀性。</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Discussion -->
+      <section id="discussion" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-12">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <h2 class="text-2xl font-bold text-gray-900">三、討論與調整</h2>
+        </div>
+
+        <div class="space-y-12">
+
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-8 border-b border-gray-100">
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Q1. 關於視覺舒適度與競品分析</h3>
+              <p class="text-gray-600 mb-6">
+                主圖排版應以「視覺舒適」及「重點瀏覽清晰」為主。如將所有特色都做為賣點強調，版面會過於凌亂。
+                競品常有畫面過於擁擠、銷售重點隨意擺放無瀏覽順序的問題。
+              </p>
+
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                <span class="font-bold text-gray-900">結論：</span>
+                <span class="text-gray-700">SP 在設計上應以「產品、規格(容量/速度/接頭)」為主，其餘輔助資訊可簡化或刪除。</span>
+              </div>
+
+              <h4 class="text-sm font-bold text-gray-500 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/>
+                </svg>
+                競品範例 (點擊放大檢視)：
+              </h4>
+
+              <div id="competitorGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3"></div>
+            </div>
+          </div>
+
+          <!-- Q2 block -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-8">
+              <h3 class="text-xl font-bold text-gray-900 mb-6">Q2. 主圖上的各項區域規範 (與設計師們討論)</h3>
+
+              <div class="space-y-8">
+
+                <!-- 1 -->
+                <div class="flex gap-4 items-start">
+                  <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                  <div class="w-full">
+                    <h4 class="font-bold text-gray-900 text-lg">定義區域尺寸 - 排版上是否有彈性?</h4>
+                    <p class="text-gray-600 mt-1">需確認在不同產品類型下，既定的網格區域是否允許微調。</p>
+
+                    <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
+                      <p class="text-sm text-blue-900 leading-relaxed">
+                        <span class="font-bold">回答：</span>
+                        盡量將產品限縮在 <span class="font-semibold">700x700px</span> 內以確保每張主圖的比例準確，
+                        如遇到多色多角度都可再調整方向、旋轉位置等方式設計。
+                        <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="flex gap-4 items-start">
+                  <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                  <div class="w-full">
+                    <h4 class="font-bold text-gray-900 text-lg">文字規範 - 字體共用性</h4>
+                    <p class="text-gray-600 mt-1 mb-2">
+                      各設計師目前電腦的文字字體是否能共用 (Noto Sans TC 新版 / Noto Sans CJK 舊版)。
+                    </p>
+
+                    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-sm text-yellow-900 mb-3">
+                      <div class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+                        </svg>
+                        <span><strong>注意：</strong> CJK 系列在部分微軟系統上可能有掉字/閃退紀錄，是否日後不使用可討論。</span>
+                      </div>
+                    </div>
+
+                    <div class="max-w-md">
+                      <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Noto-sans-TC.png"
+                           class="w-full rounded border border-gray-200" alt="Font Source" />
+                      <p class="text-xs text-gray-400 mt-1">資訊來源：GPT GOOGLE font</p>
+                    </div>
+
+                    <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
+                      <p class="text-sm text-blue-900 leading-relaxed">
+                        <span class="font-bold">回答：</span>
+                        請設計師們確定電腦內部的 Noto Sans 為哪一個？
+                        並從 Google Fonts 安裝最新的 <span class="font-semibold">Noto Sans TC / KR / JP</span> 等語系以避免漏字。
+                        <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="flex gap-4 items-start">
+                  <div class="bg-blue-100 text-blue-800 w-8 h-8 min-w-[32px] rounded-full flex items-center justify-content-center font-bold flex-shrink-0">3</div>
+                  <div class="w-full">
+                    <h4 class="font-bold text-gray-900 text-lg">Icon 的識別性定義</h4>
+                    <p class="text-gray-600 mt-1">
+                      「Icon + 文案」以及「Icon 可獨立閱讀」，後者在主圖上的使用性較高，但就有可能需要重製。這部分或許需要跟業務行銷溝通。
+                    </p>
+
+                    <div class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
+                      <p class="text-sm text-blue-900 leading-relaxed">
+                        <span class="font-bold">回答：</span>
+                        Icon 可持續性優化識別性更高，如遇到窗口提供較少的產品優勢重點也可請對方補充，
+                        並將右側的文字規格區域內的像是保固 / 瓦數 / 讀取 / WH 等通用性較高的圖示再標準化後均可共用在各類別。
+                        <span class="text-blue-700 font-semibold">By Jolin 2026.01.12</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /space-y -->
+            </div>
+          </div>
+
+        </div>
+      </section>
     </div>
-  </div>
-</div>
-    </section>
+
+    <!-- ===================== TAB 2：主圖修正（新內容） ===================== -->
+    <div id="tab-picfix" class="tab-panel">
+      <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div class="flex items-center gap-3 h2line">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v18"/><path d="M3 12h18"/><path d="m19 5-2 2"/><path d="m7 17-2 2"/><path d="m19 19-2-2"/><path d="m7 7-2-2"/>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">主圖修正</h2>
+          </div>
+
+          <div class="space-y-10">
+
+            <!-- 第一段 -->
+            <div class="space-y-4">
+              <h3 class="text-xl font-extrabold text-gray-900">銷售主圖的用意？</h3>
+              <p class="text-gray-700 text-lg font-bold">主圖到底是「轉換工具」，還是「規格說明書縮圖」</p>
+
+              <p class="text-gray-600 leading-relaxed">
+                並非所有東西都是銷售特色，而是應該使用能讓消費者在 <span class="font-semibold">0.3–1 秒</span> 內做決定用的特色。
+                讓使用者停下來點進去，而不是讓他在主圖就把規格讀完。
+              </p>
+
+              <div class="quote-strong">>>> 人在短時間內能處理的資訊量有限，超過即失敗 <<<</div>
+            </div>
+
+            <!-- 目前情況 -->
+            <div>
+              <h3 class="text-xl font-extrabold text-gray-900 mb-4">目前情況</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                  <div class="font-bold text-gray-900 mb-2">1. 產品跟規格都是主角</div>
+                  <div class="text-sm text-gray-600">可能風險：畫面為了呈現都很大又很壅擠，造成畫面雜亂，資訊讀取不完煩躁就不會有購買慾望</div>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                  <div class="font-bold text-gray-900 mb-2">2. 資訊沒有層級，全部都在「大」</div>
+                  <div class="text-sm text-gray-600">可能風險：當所有人都是主角，消費者看完卻什麼都不記得了</div>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                  <div class="font-bold text-gray-900 mb-2">3. 畫面充滿各種圖＋文</div>
+                  <div class="text-sm text-gray-600">可能風險：根據 Hick's Law，東西越多，選擇時間越長，消費者開始動搖時就不一定是非你不可</div>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                  <div class="font-bold text-gray-900 mb-2">4. 文字跟圖總是有空間就是「大」</div>
+                  <div class="text-sm text-gray-600">可能風險：文字過多或硬要擠入，不如拿掉圖讓文字更清晰；適度留白讓閱讀更無壓力</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 修正項目 -->
+            <div class="space-y-6">
+              <h3 class="text-xl font-extrabold text-gray-900">修正項目</h3>
+
+              <div class="bg-blue-50 border border-blue-100 rounded-xl p-5">
+                <div class="font-extrabold text-blue-900 mb-2">項目一 ＞ 進行主圖上的圖文圖示修正</div>
+                <div class="text-sm text-blue-900 leading-relaxed">
+                  先收集所有會重複出現、卻有共通性的圖示，並需要以文案輔助的圖文加以整理、編排，統一該樣式以減少日後出現同含意卻不同樣式的圖示。<br/>
+                  <span class="font-bold">如何修正？</span> 修正為單一樣式、字體、尺寸。
+                </div>
+              </div>
+
+              <!-- 四個圖文模組 -->
+              <div class="space-y-6">
+                <!-- 1 保固 -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                  <div class="p-5 border-b border-gray-100">
+                    <div class="font-extrabold text-gray-900">第一個圖文：保固日期</div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      把保固從「設計內容」轉為「變數內容」。同一視覺語法僅替換數字（1 / 2 / 3 / 5 / 10 / 終身）降低錯誤成本與溝通成本。<br/>
+                      <span class="font-semibold">(!) 需討論是否均為有效保固？</span>
+                    </div>
+                  </div>
+                  <div class="p-5 grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">舊款圖示</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_warranty_old.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_warranty_old.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="warranty old"/>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">新款圖示（圖＋文字）</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_warranty_NEW.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_warranty_NEW.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="warranty new"/>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 瓦數 -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                  <div class="p-5 border-b border-gray-100">
+                    <div class="font-extrabold text-gray-900">第二個圖文：瓦數</div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      數字一致、單位一致（WATTS）能快速確認（20 / 22.5 / 30）
+                    </div>
+                  </div>
+                  <div class="p-5 grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">舊款圖示</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_watts-and-wh_old.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_watts-and-wh_old.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="watts old"/>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">新款圖示（圖＋文字）</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_watts-and-wh_new.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_watts-and-wh_new.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="watts new"/>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3 介面/RW -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                  <div class="p-5 border-b border-gray-100">
+                    <div class="font-extrabold text-gray-900">第三個圖文：傳輸介面及 RW 讀取</div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      統整為一個圖示，僅需修改數值
+                    </div>
+                  </div>
+                  <div class="p-5 grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">舊款圖示</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_speed_old.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_speed_old.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="speed old"/>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">新款圖示（圖＋文字）</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_speed_new.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_speed_new.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="speed new"/>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4 容量 -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                  <div class="p-5 border-b border-gray-100">
+                    <div class="font-extrabold text-gray-900">第四個圖文：容量</div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      將容量與產品配置更能加深記憶點，第一眼就能讓消費者記住該商品的販售規格有哪些
+                    </div>
+                  </div>
+                  <div class="p-5 grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">舊款圖示</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_capacity_old.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_capacity_old.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="capacity old"/>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                      <div class="text-xs text-gray-500 mb-2">新款圖示（圖＋文字）</div>
+                      <img data-lightbox="true" data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_capacity_new.png"
+                           src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/picfix_capacity_new.png"
+                           class="w-full rounded-lg border border-gray-200 cursor-zoom-in" alt="capacity new"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 本次調整目的 -->
+              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <div class="font-extrabold text-gray-900 mb-2">本次調整的目的</div>
+                <div class="text-sm text-gray-700 leading-relaxed space-y-2">
+                  <p>不是減少資訊，而是重新分配資訊層級。</p>
+                  <p>透過將容量、瓦數、保固與介面統一為規格模組，並搭配 Icon + 文字，讓主圖回歸「產品與銷售重點」。</p>
+                  <p>規格則以一致、可比較、可快速理解的方式輔助使用者判斷，同時也降低後續維護與誤用風險，層級分配更能讓區域資訊更獨立清楚，運用空間更為寬大。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 以下配置：三張圖一個橫式區域 -->
+            <div class="space-y-6">
+              <h3 class="text-xl font-extrabold text-gray-900">以下配置（每組：調整前 / 區域調整 / 調整後）</h3>
+
+              <div class="space-y-8">
+                <!-- helper: a block builder -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">A60</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60.png" alt="A60 before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60_guide.png" alt="A60 guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/A60_guide_demo.png" alt="A60 after"/>
+                  </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">CP10</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10.png" alt="CP10 before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10_guide.png" alt="CP10 guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/CP10_guide_demo.png" alt="CP10 after"/>
+                  </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">DS72</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/D72.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/D72.png" alt="DS72 before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/DS72_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/DS72_guide.png" alt="DS72 guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/DS72_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/DS72_guide_demo.png" alt="DS72 after"/>
+                  </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">P34A60</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60.png" alt="P34A60 before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60_guide.png" alt="P34A60 guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/P34A60_guide_demo.png" alt="P34A60 after"/>
+                  </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">PX10</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10.png" alt="PX10 before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10_guide.png" alt="PX10 guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/PX10_guide_demo.png" alt="PX10 after"/>
+                  </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6">
+                  <div class="font-extrabold text-gray-900 mb-4">Storm</div>
+                  <div class="grid md:grid-cols-3 gap-4">
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/Storm.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/Storm.png" alt="Storm before"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/storm_guide.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/storm_guide.png" alt="Storm guide"/>
+                    <img class="rounded-xl border border-gray-200 cursor-zoom-in" data-lightbox="true"
+                         data-src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/storm_guide_demo.png"
+                         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/storm_guide_demo.png" alt="Storm after"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 討論與調整（預留回答空間） -->
+            <div class="space-y-4">
+              <h3 class="text-xl font-extrabold text-gray-900">討論與調整</h3>
+
+              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <div class="font-extrabold text-gray-900">Q1. 產品配置的數量多寡</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  當商品有數種顏色時是否全部配置？同一系列大小如 SSD / DRAM / PHD 的排法是否統一方向？記憶卡是否全數擺出？
+                </div>
+                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
+                          placeholder="（預留回答空間）"></textarea>
+              </div>
+
+              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <div class="font-extrabold text-gray-900">Q2. 右方文字規範區域何為第一優先曝光？</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  部分商品層級是保固為第一優先，是否需要統一標準，逐分類規劃亦或統一規範。
+                </div>
+                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
+                          placeholder="（預留回答空間）"></textarea>
+              </div>
+
+              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <div class="font-extrabold text-gray-900">Q3. 是否有其他須調整的部分</div>
+                <textarea class="mt-3 w-full min-h-[110px] rounded-xl border border-gray-300 p-3 text-sm"
+                          placeholder="（預留回答空間）"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== TAB 3：實際操作（先做骨架，之後你再補內容也方便） ===================== -->
+    <div id="tab-howto" class="tab-panel">
+      <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div class="flex items-center gap-3 h2line">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v6"/><path d="M12 16v6"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 14.83l4.24 4.24"/>
+              <path d="M2 12h6"/><path d="M16 12h6"/><path d="M4.93 19.07l4.24-4.24"/><path d="M14.83 9.17l4.24-4.24"/>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">實際操作</h2>
+          </div>
+
+          <div class="text-gray-600 leading-relaxed">
+            先把這頁當作「流程與操作截圖」的收納區。你之後丟文字或圖片連結，我再幫你整理成步驟卡片。
+          </div>
+
+          <div class="mt-6 grid md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+              <div class="font-extrabold text-gray-900 mb-2">操作流程（待補）</div>
+              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                <li>PSD/AI 檔案準備</li>
+                <li>套用規格模組</li>
+                <li>輸出命名/尺寸</li>
+                <li>上架/檢查</li>
+              </ul>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+              <div class="font-extrabold text-gray-900 mb-2">常見錯誤（待補）</div>
+              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                <li>字體版本不一致</li>
+                <li>規格單位不統一</li>
+                <li>Icon 樣式混用</li>
+                <li>資訊層級全都放大</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== TAB 4：後續調整（先做骨架） ===================== -->
+    <div id="tab-follow" class="tab-panel">
+      <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div class="flex items-center gap-3 h2line">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">後續調整</h2>
+          </div>
+
+          <div class="text-gray-600 leading-relaxed">
+            這頁用來記錄「版本變更、決議、待辦」。例如：各品類第一優先規格、保固有效性、Icon 決定版等。
+          </div>
+
+          <div class="mt-6 bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <div class="font-extrabold text-gray-900 mb-2">變更紀錄（待補）</div>
+            <textarea class="w-full min-h-[160px] rounded-xl border border-gray-300 p-3 text-sm"
+                      placeholder="例如：2026/01/xx - 決議：保固以『有效保固』為準；右側第一優先依品類..."></textarea>
+          </div>
+
+        </div>
+      </section>
+    </div>
 
   </main>
 
@@ -685,7 +1086,6 @@
     // 你的圖片來源 repo
     const RAW_BASE = "https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/";
 
-    // 原本 iconsList
     const iconsList = [
       { name: "8K UHD", src: RAW_BASE + "8K%20UHD.png" },
       { name: "CFexpress", src: RAW_BASE + "CFexpress%204.0%20Type%20B.png" },
@@ -700,7 +1100,6 @@
       { name: "XMP", src: RAW_BASE + "Supports%20XMP.png" },
     ];
 
-    // 原本 competitorImages
     const competitorImages = [
       RAW_BASE + "Adata.png",
       RAW_BASE + "GIGASTONE.png",
@@ -715,24 +1114,28 @@
 
     // Render icons grid
     const iconsGrid = document.getElementById("iconsGrid");
-    iconsGrid.innerHTML = iconsList.map(i => `
-      <div class="bg-white p-2 rounded border border-gray-100 flex flex-col items-center">
-        <img src="${i.src}" alt="${i.name}" class="w-full h-auto object-contain mb-1" />
-        <span class="text-[10px] text-gray-400 text-center">${i.name}</span>
-      </div>
-    `).join("");
+    if (iconsGrid) {
+      iconsGrid.innerHTML = iconsList.map(i => `
+        <div class="bg-white p-2 rounded border border-gray-100 flex flex-col items-center">
+          <img src="${i.src}" alt="${i.name}" class="w-full h-auto object-contain mb-1" />
+          <span class="text-[10px] text-gray-400 text-center">${i.name}</span>
+        </div>
+      `).join("");
+    }
 
     // Render competitor grid + lightbox
     const competitorGrid = document.getElementById("competitorGrid");
-    competitorGrid.innerHTML = competitorImages.map(src => `
-      <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 relative group cursor-pointer hover:border-blue-500 transition shadow-sm hover:shadow-md"
-           data-lightbox="true" data-src="${src}">
-        <img src="${src}" alt="Competitor" class="w-full h-full object-contain p-1" />
-        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition flex items-center justify-center">
-          <span class="text-white opacity-0 group-hover:opacity-100 drop-shadow-md">🔍</span>
+    if (competitorGrid) {
+      competitorGrid.innerHTML = competitorImages.map(src => `
+        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 relative group cursor-pointer hover:border-blue-500 transition shadow-sm hover:shadow-md"
+             data-lightbox="true" data-src="${src}">
+          <img src="${src}" alt="Competitor" class="w-full h-full object-contain p-1" />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition flex items-center justify-center">
+            <span class="text-white opacity-0 group-hover:opacity-100 drop-shadow-md">🔍</span>
+          </div>
         </div>
-      </div>
-    `).join("");
+      `).join("");
+    }
 
     // Lightbox logic
     const lightbox = document.getElementById("lightbox");
@@ -741,12 +1144,12 @@
 
     function openLightbox(src) {
       lightboxImg.src = src;
-      lightbox.classList.remove("hidden");
+      lightbox.classList.remove("lb-hidden");
       lightbox.classList.add("flex");
     }
     function closeLightbox() {
       lightboxImg.src = "";
-      lightbox.classList.add("hidden");
+      lightbox.classList.add("lb-hidden");
       lightbox.classList.remove("flex");
     }
 
@@ -758,8 +1161,8 @@
       }
     });
 
-    lightbox.addEventListener("click", closeLightbox);
-    lightboxClose.addEventListener("click", (e) => { e.stopPropagation(); closeLightbox(); });
+    lightbox?.addEventListener("click", closeLightbox);
+    lightboxClose?.addEventListener("click", (e) => { e.stopPropagation(); closeLightbox(); });
 
     // Mobile menu
     const menuBtn = document.getElementById("menuBtn");
@@ -767,7 +1170,7 @@
     const menuIcon = document.getElementById("menuIcon");
     const closeIcon = document.getElementById("closeIcon");
 
-    menuBtn.addEventListener("click", () => {
+    menuBtn?.addEventListener("click", () => {
       const isOpen = !mobileMenu.classList.contains("hidden");
       if (isOpen) {
         mobileMenu.classList.add("hidden");
@@ -780,8 +1183,81 @@
       }
     });
 
-    // 點 mobile menu 連結後自動收起
-    mobileMenu.querySelectorAll("a").forEach(a => {
+    // ===== Tabs switching =====
+    const panels = {
+      guide: document.getElementById("tab-guide"),
+      picfix: document.getElementById("tab-picfix"),
+      howto: document.getElementById("tab-howto"),
+      follow: document.getElementById("tab-follow")
+    };
+
+    const btnOverview = document.getElementById("btnOverview");
+    const btnPicfix = document.getElementById("btnPicfix");
+    const btnHowto  = document.getElementById("btnHowto");
+    const btnFollow = document.getElementById("btnFollow");
+
+    const overviewDropdown = document.getElementById("overviewDropdown");
+
+    function setActiveBtn(activeKey) {
+      [btnOverview, btnPicfix, btnHowto, btnFollow].forEach(b => b && b.classList.remove("is-active"));
+      if (activeKey === "guide")  btnOverview?.classList.add("is-active");
+      if (activeKey === "picfix") btnPicfix?.classList.add("is-active");
+      if (activeKey === "howto")  btnHowto?.classList.add("is-active");
+      if (activeKey === "follow") btnFollow?.classList.add("is-active");
+    }
+
+    function switchTab(key) {
+      Object.values(panels).forEach(p => p && p.classList.remove("is-active"));
+      panels[key]?.classList.add("is-active");
+      setActiveBtn(key);
+
+      // 關掉 dropdown + mobile menu
+      overviewDropdown?.classList.remove("is-open");
+      mobileMenu?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+
+      // 進新頁面就回到上方（比較像換頁）
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Desktop buttons
+    btnPicfix?.addEventListener("click", () => switchTab("picfix"));
+    btnHowto?.addEventListener("click", () => switchTab("howto"));
+    btnFollow?.addEventListener("click", () => switchTab("follow"));
+
+    // 規範總覽按鈕：點一下開/關 dropdown，但也要確保在 guide 頁
+    btnOverview?.addEventListener("click", () => {
+      if (!panels.guide.classList.contains("is-active")) switchTab("guide");
+      overviewDropdown?.classList.toggle("is-open");
+    });
+
+    // dropdown jump
+    document.querySelectorAll("[data-jump]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-jump");
+        // 先切回 guide 頁
+        if (!panels.guide.classList.contains("is-active")) switchTab("guide");
+        overviewDropdown?.classList.remove("is-open");
+
+        // 等 panel 顯示後再跳
+        setTimeout(() => {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      });
+    });
+
+    // Mobile tab buttons
+    mobileMenu?.querySelectorAll("[data-tab]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-tab");
+        if (key) switchTab(key);
+      });
+    });
+
+    // 點 mobile menu 連結後自動收起（jump 按鈕也處理了）
+    mobileMenu?.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
         menuIcon.classList.remove("hidden");
@@ -789,32 +1265,32 @@
       });
     });
 
-    /* === [新增] Hierarchy click -> highlight demo === */
+    // 點外面關 dropdown
+    document.addEventListener("click", (e) => {
+      const isInside = e.target.closest("#overviewDropdown");
+      if (!isInside) overviewDropdown?.classList.remove("is-open");
+    });
+
+    /* ===== Hierarchy click -> highlight demo ===== */
     const hierList = document.getElementById("hierarchyList");
     const demo = document.getElementById("hierDemo");
 
     function setZoneActive(targetClass) {
-  // 清除 demo active
-  demo.querySelectorAll(".zone").forEach(z => z.classList.remove("active"));
-  demo.classList.add("has-active");
+      if (!demo) return;
 
-  // 特例：右側 1/3 要連同底部延伸區一起亮
-  if (targetClass === "zone-side") {
-    demo.querySelectorAll(".zone-side, .zone-sideFill").forEach(el => el.classList.add("active"));
-    return;
-  }
+      demo.querySelectorAll(".zone").forEach(z => z.classList.remove("active"));
+      demo.classList.add("has-active");
 
-  // 其他正常流程
-  const targetEl = demo.querySelector("." + targetClass);
-  if (targetEl) {
-    targetEl.classList.add("active");
-  } else {
-    demo.classList.remove("has-active");
-  }
-}
+      if (targetClass === "zone-none") {
+        demo.classList.remove("has-active");
+        return;
+      }
 
-    // 左側 item 點擊
-    hierList.querySelectorAll(".hier-item").forEach(item => {
+      const targetEl = demo.querySelector("." + targetClass);
+      if (targetEl) targetEl.classList.add("active");
+    }
+
+    hierList?.querySelectorAll(".hier-item").forEach(item => {
       item.addEventListener("click", () => {
         hierList.querySelectorAll(".hier-item").forEach(i => i.classList.remove("is-active"));
         item.classList.add("is-active");
@@ -824,11 +1300,8 @@
       });
     });
 
-    // 預設：點亮 zone-main
+    // Default
     setZoneActive("zone-main");
   </script>
 </body>
 </html>
-
-
-
