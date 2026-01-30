@@ -775,14 +775,15 @@
             <!-- 目前情況 -->
             <div>
               <h3 class="text-xl font-extrabold text-gray-900 mb-4">目前情況</h3>
-           <div class="grid md:grid-cols-2 gap-6 mt-6">
+           <div class="grid md:grid-cols-2 gap-6 mt-6 relative">
   <!-- 1 -->
-  <div class="bg-white p-6 rounded-2xl border border-gray-200">
-    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+  <div class="group relative bg-white p-6 rounded-2xl border border-gray-200 transition
+              hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl hover:z-30">
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 transition">
       <img
         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/icon-random-layout.png"
         alt="各種產品方向及圖示隨意配置"
-        class="w-full h-[260px] object-contain rounded-md"
+        class="w-full h-[300px] object-contain rounded-md"
         loading="lazy"
       />
     </div>
@@ -795,12 +796,13 @@
   </div>
 
   <!-- 2 -->
-  <div class="bg-white p-6 rounded-2xl border border-gray-200">
+  <div class="group relative bg-white p-6 rounded-2xl border border-gray-200 transition
+              hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl hover:z-30">
     <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
       <img
         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/no-hierarchy-all-big.png"
-        alt="資訊沒有層級-全部都在大"
-        class="w-full h-[260px] object-contain rounded-md"
+        alt="資訊沒有層級-全部都在「大」"
+        class="w-full h-[300px] object-contain rounded-md"
         loading="lazy"
       />
     </div>
@@ -813,12 +815,13 @@
   </div>
 
   <!-- 3 -->
-  <div class="bg-white p-6 rounded-2xl border border-gray-200">
+  <div class="group relative bg-white p-6 rounded-2xl border border-gray-200 transition
+              hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl hover:z-30">
     <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
       <img
         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/same-series-inconsistent-layout.png"
         alt="同系列產品出現不同排法-大小不同圖示"
-        class="w-full h-[260px] object-contain rounded-md"
+        class="w-full h-[300px] object-contain rounded-md"
         loading="lazy"
       />
     </div>
@@ -831,19 +834,20 @@
   </div>
 
   <!-- 4 -->
-  <div class="bg-white p-6 rounded-2xl border border-gray-200">
+  <div class="group relative bg-white p-6 rounded-2xl border border-gray-200 transition
+              hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl hover:z-30">
     <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
       <img
         src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/picfix/product-all-focus.png"
-        alt="產品跟規格都是主角"
-        class="w-full h-[260px] object-contain rounded-md"
+        alt="產品與規格同時搶主角"
+        class="w-full h-[300px] object-contain rounded-md"
         loading="lazy"
       />
     </div>
     <div class="mt-5">
       <h4 class="font-bold text-gray-900 text-lg mb-2">4. 產品與規格同時搶主角</h4>
       <p class="text-sm text-gray-600 leading-relaxed">
-        可能風險：版面同時放大多個重點導致擁擠，視覺動線混亂，消費者難以在短時間內抓到「第一優先」資訊。
+        可能風險：版面同時放大多個重點導致擁擠，視覺動線混亂，消費者難以在短時間內抓到第一優先資訊。
       </p>
     </div>
   </div>
@@ -1918,6 +1922,7 @@ initFixedAnswerBlocks();
   </script>
 </body>
 </html>
+
 
 
 
