@@ -167,8 +167,8 @@
           </div>
 
           <button class="navbtn" id="btnPicfix" type="button">主圖修正</button>
-          <button class="navbtn" id="btnHowto" type="button">實際操作</button>
-          <button class="navbtn" id="btnFollow" type="button">後續調整</button>
+          <button class="navbtn" id="btnHowto" type="button">執行流程</button>
+          <button class="navbtn" id="btnFollow" type="button">預期成效</button>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -207,9 +207,9 @@
         <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
                 data-tab="picfix">主圖修正</button>
         <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="howto">實際操作</button>
+                data-tab="howto">執行流程</button>
         <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="follow">後續調整</button>
+                data-tab="follow">預期成效</button>
       </div>
     </div>
   </nav>
@@ -1245,79 +1245,281 @@
     </div>
 
     <!-- ===================== TAB 3：實際操作（先做骨架，之後你再補內容也方便） ===================== -->
-    <div id="tab-howto" class="tab-panel">
-      <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-          <div class="flex items-center gap-3 h2line">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v6"/><path d="M12 16v6"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 14.83l4.24 4.24"/>
-              <path d="M2 12h6"/><path d="M16 12h6"/><path d="M4.93 19.07l4.24-4.24"/><path d="M14.83 9.17l4.24-4.24"/>
-            </svg>
-            <h2 class="text-2xl font-bold text-gray-900">實際操作</h2>
-          </div>
-
-          <div class="text-gray-600 leading-relaxed">
-            實際操作後再丟在這邊我再來補齊。
-          </div>
-
-          <div class="mt-6 grid md:grid-cols-2 gap-4">
-            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-              <div class="font-extrabold text-gray-900 mb-2">操作流程（待補）</div>
-              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                <li>PSD/AI 檔案準備</li>
-                <li>套用規格模組</li>
-                <li>輸出命名/尺寸</li>
-                <li>上架/檢查</li>
-              </ul>
-            </div>
-            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-              <div class="font-extrabold text-gray-900 mb-2">設計師參考規範統整</div>
-              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                <li>字體版本一致</li>
-                <li>規格單位統一</li>
-                <li>Icon大小及圖片樣式方向確認</li>
-                <li>實際操作問題</li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-      </section>
+    <section id="process" class="py-16 bg-white border-y border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">執行流程</h2>
+      <p class="mt-6 text-gray-600 leading-relaxed max-w-3xl mx-auto">
+        本流程說明主圖製作中行銷與設計的分工方式；行銷負責內容與方向定義，
+        設計依需求進行視覺轉譯與執行，並於必要時進行協作與調整。
+      </p>
     </div>
+
+    <!-- 上半部：需求部門 / 設計部門 -->
+    <div class="grid lg:grid-cols-2 gap-10 mb-14">
+      <!-- 需求部門 -->
+      <div class="rounded-[28px] border-2 border-gray-900 p-10 bg-white">
+        <h3 class="text-3xl font-medium text-gray-900 text-center mb-8">需求部門</h3>
+
+        <div class="space-y-10">
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">1. 提供該產品配置主圖資訊</h4>
+            <p class="text-gray-600 mb-4">
+              需提供：根據該商品的銷售優勢，提供適合的產品 ICON 文組
+            </p>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>文案提供：精簡後的品名、精選特色文案及規格數據</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>資源提供：必須置入的標章確認樣式（如：節能標章、獲獎紀錄）</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">2. 提供他國語系的文案</h4>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>EN - 根據中文語系主圖重新修正合適文宣及 Icon 英文和 Title</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>TH - 根據中文語系主圖重新修正合適文宣及 Icon 泰文和 Title</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-2">3. 觀察市場反應及確立修正需求</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- 設計部門 -->
+      <div class="rounded-[28px] border-2 border-gray-900 p-10 bg-white">
+        <h3 class="text-3xl font-medium text-gray-900 text-center mb-8">設計部門</h3>
+
+        <div class="space-y-10">
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">1. 設計符合該需求產品主圖</h4>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>視覺佈局 - 根據需求端需求進行構圖</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>品牌一致 - 確保字體、配色與品牌形象相符，並符合電商平台的規範</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>技術執行 - 執行設計 ICON 重新繪製</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">2. 修正為他國語系使用</h4>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>EN - 根據中文語系主圖重新修正合適文宣及 Icon 英文和 Title</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-2 inline-block w-3 h-3 rounded-full border-2 border-gray-700"></span>
+                <span>TH - 根據中文語系主圖重新修正合適文宣及 Icon 泰文和 Title</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-semibold text-gray-900 mb-2">3. 支援修正方案設計</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 圖例 -->
+    <div class="flex flex-col items-center gap-3 mb-10">
+      <div class="flex flex-wrap justify-center gap-8 text-sm text-gray-700">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+          <span>SP 廣報電通：PChome 24h、Yahoo 購物中心、MOMO</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+          <span>SP 官方旗艦店：TW 蝦皮購物</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-fuchsia-400"></span>
+          <span>待確定：MY/TH 蝦皮購物</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部四欄卡 -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="rounded-2xl border border-gray-300 bg-white p-5">
+        <div class="text-center text-sm text-gray-600 rounded-full border border-gray-300 py-1 mb-4">
+          SP 廣報電通
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl bg-yellow-300/90 px-4 py-3 text-center font-semibold">TW PChome24</div>
+          <div class="rounded-xl bg-yellow-300/90 px-4 py-3 text-center font-semibold">YAHOO 購物中心</div>
+          <div class="rounded-xl bg-yellow-300/90 px-4 py-3 text-center font-semibold">MOMO 購物中心</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-gray-300 bg-white p-5">
+        <div class="text-center text-sm text-gray-600 rounded-full border border-gray-300 py-1 mb-4">
+          SP 官方旗艦店
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl bg-emerald-300/90 px-4 py-3 text-center font-semibold">TW Shopee</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-gray-300 bg-white p-5">
+        <div class="text-center text-sm text-gray-600 rounded-full border border-gray-300 py-1 mb-4">
+          待確定
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl bg-fuchsia-300/90 px-4 py-3 text-center font-semibold">MY Shopee</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-gray-300 bg-white p-5">
+        <div class="text-center text-sm text-gray-600 rounded-full border border-gray-300 py-1 mb-4">
+          待確定
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl bg-fuchsia-300/90 px-4 py-3 text-center font-semibold">TH Shopee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- ===================== TAB 4：後續調整（先做骨架） ===================== -->
-    <div id="tab-follow" class="tab-panel">
-      <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-          <div class="flex items-center gap-3 h2line">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>
-            </svg>
-            <h2 class="text-2xl font-bold text-gray-900">後續調整</h2>
-          </div>
+  <section id="outcome" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">預期成效</h2>
+      <p class="mt-6 text-gray-600 leading-relaxed max-w-3xl mx-auto">
+        本流程說明主圖製作中行銷與設計的分工方式；行銷負責內容與方向定義，
+        設計依需求進行視覺轉譯與執行，並於必要時進行協作與調整。
+      </p>
+    </div>
 
-          <div class="text-gray-600 leading-relaxed">
-            這邊記錄可能會有需要討論的東東 目前還沒想到先放著
-          </div>
-
-          <div class="mt-6 bg-gray-50 border border-gray-200 rounded-2xl p-6">
-            <div class="font-extrabold text-gray-900 mb-2">變更紀錄（待補）</div>
-            <textarea class="w-full min-h-[160px] rounded-xl border border-gray-300 p-3 text-sm"
-                      placeholder="例如：幾月幾號討論了什麼東東"></textarea>
-          </div>
-
+    <div class="grid lg:grid-cols-2 gap-10">
+      <!-- 卡 1 -->
+      <div class="rounded-2xl border border-gray-300 bg-white p-10">
+        <div class="flex items-center justify-between mb-10">
+          <div class="text-2xl font-medium text-gray-900">3月-4月</div>
+          <div class="text-xs text-gray-700 border border-gray-300 rounded-full px-3 py-1">預期時間</div>
         </div>
-      </section>
+
+        <div class="text-center text-3xl font-medium text-gray-900 mb-10">PChome24 主圖完成</div>
+
+        <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+        <div class="grid grid-cols-2 gap-10 text-sm text-gray-700">
+          <div class="text-center">
+            <div class="text-base font-semibold text-gray-900 mb-4">設計部</div>
+            <div class="space-y-2 leading-relaxed">
+              <div>提交主圖規劃安排會議溝通</div>
+              <div>修正並確認主圖規範</div>
+              <div>執行並提供完稿檔案</div>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-base font-semibold text-gray-900 mb-4">需求部門協助</div>
+            <div class="space-y-2 leading-relaxed">
+              <div>確立會議並確認相關人員參與</div>
+              <div>溝通討論 提出修正</div>
+              <div>提供文案及需執行品項</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+        <div class="text-center text-2xl font-medium text-gray-900">修正並結案</div>
+      </div>
+
+      <!-- 卡 2 -->
+      <div class="rounded-2xl border border-gray-300 bg-white p-10">
+        <div class="flex items-center justify-between mb-10">
+          <div class="text-2xl font-medium text-gray-900">4月-9月</div>
+          <div class="text-xs text-gray-700 border border-gray-300 rounded-full px-3 py-1">預期時間</div>
+        </div>
+
+        <div class="text-center text-3xl font-medium text-gray-900 mb-10">Shopee 各國語系資料整理</div>
+
+        <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+        <div class="grid grid-cols-2 gap-10 text-sm text-gray-700">
+          <div class="text-center">
+            <div class="text-base font-semibold text-gray-900 mb-4">設計部</div>
+            <div class="space-y-2 leading-relaxed">
+              <div>溝通討論 確立主圖他國語系配置</div>
+              <div class="opacity-0">placeholder</div>
+              <div class="opacity-0">placeholder</div>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-base font-semibold text-gray-900 mb-4">需求部門協助</div>
+            <div class="space-y-2 leading-relaxed">
+              <div>溝通討論 提供文案及需執行品項</div>
+              <div class="opacity-0">placeholder</div>
+              <div class="opacity-0">placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+        <div class="text-center text-2xl font-medium text-gray-900 opacity-0">修正並結案</div>
+      </div>
     </div>
 
-  </main>
+    <!-- 底部長卡 -->
+    <div class="mt-10 rounded-2xl border border-gray-300 bg-white p-10">
+      <div class="flex items-center justify-between mb-10">
+        <div class="text-2xl font-medium text-gray-900">10月-12月</div>
+        <div class="text-xs text-gray-700 border border-gray-300 rounded-full px-3 py-1">預期時間</div>
+      </div>
 
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-gray-500 text-sm">SP E-commerce Product Main Image Visual Language Guidelines © 2026</p>
+      <div class="text-center text-3xl font-medium text-gray-900 mb-10">Shopee 各國語系 主圖完成</div>
+
+      <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+      <div class="grid grid-cols-2 gap-10 text-sm text-gray-700 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="text-base font-semibold text-gray-900 mb-4">設計部</div>
+          <div class="space-y-2 leading-relaxed">
+            <div>執行並提供完稿檔案</div>
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="text-base font-semibold text-gray-900 mb-4">需求部門協助</div>
+          <div class="space-y-2 leading-relaxed">
+            <div>溝通討論 提出修正</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-dashed border-gray-300 my-10"></div>
+
+      <div class="text-center text-2xl font-medium text-gray-900">修正並結案</div>
     </div>
+  </div>
+</section>
+
   </footer>
 
   <script>
@@ -1922,6 +2124,7 @@ initFixedAnswerBlocks();
   </script>
 </body>
 </html>
+
 
 
 
