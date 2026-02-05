@@ -169,6 +169,7 @@
           <button class="navbtn" id="btnPicfix" type="button">主圖修正</button>
           <button class="navbtn" id="btnHowto" type="button">執行流程</button>
           <button class="navbtn" id="btnFollow" type="button">預期成效</button>
+          <button class="navbtn" id="btnRecord" type="button">紀錄事項</button>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -1522,6 +1523,105 @@
   </div>
 </section>
     </div>
+<!-- ===================== TAB 5：紀錄事項 ===================== -->
+<div id="tab-record" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- 標題 -->
+      <div class="text-center mb-14">
+        <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">紀錄事項</h2>
+        <p class="mt-6 text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          本頁用於紀錄各季度實際執行情況，確認流程是否確實落地，
+          並作為後續調整與回顧的依據。
+        </p>
+      </div>
+
+      <!-- 四個季度 -->
+      <div class="grid md:grid-cols-2 gap-10">
+
+        <!-- Q1 -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q1｜PChome 產品主圖規劃與落實（TW）
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div>
+              <span class="font-semibold">執行紀錄：</span>
+              <p class="mt-1 text-gray-600">
+                （此區可填寫實際執行內容、遇到的問題或調整原因）
+              </p>
+            </div>
+
+            <div>
+              <span class="font-semibold">完成狀態：</span>
+              <span class="ml-2 text-gray-600">□ 已完成　□ 進行中　□ 延後</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q2｜Shopee（EN）主圖版面語言設定
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div>
+              <span class="font-semibold">執行紀錄：</span>
+              <p class="mt-1 text-gray-600">（可填寫語系轉換、規範落差等）</p>
+            </div>
+
+            <div>
+              <span class="font-semibold">完成狀態：</span>
+              <span class="ml-2 text-gray-600">□ 已完成　□ 進行中　□ 延後</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q3｜Shopee（TW / MY）主圖落實
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div>
+              <span class="font-semibold">執行紀錄：</span>
+              <p class="mt-1 text-gray-600">（可填寫平台差異、實際成效）</p>
+            </div>
+
+            <div>
+              <span class="font-semibold">完成狀態：</span>
+              <span class="ml-2 text-gray-600">□ 已完成　□ 進行中　□ 延後</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q4｜Coupang（KR）主圖規劃
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div>
+              <span class="font-semibold">執行紀錄：</span>
+              <p class="mt-1 text-gray-600">（可填寫是否進入規劃或暫緩）</p>
+            </div>
+
+            <div>
+              <span class="font-semibold">完成狀態：</span>
+              <span class="ml-2 text-gray-600">□ 已完成　□ 進行中　□ 延後</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
 
   <script>
     // 你的圖片來源 repo
@@ -2120,11 +2220,60 @@ initFixedAnswerBlocks();
     });
   });
 })();
+// 1️⃣ panels 對照表（集中管理）
+  const panels = {
+    overview: document.getElementById("tab-overview"),
+    fix: document.getElementById("tab-fix"),
+    flow: document.getElementById("tab-flow"),
+    result: document.getElementById("tab-result"),
+    record: document.getElementById("tab-record") // ← 新增這行
+  };
 
+  // 2️⃣ Tab 切換主函式
+  function switchTab(activeKey) {
+    // 隱藏全部 panel
+    Object.values(panels).forEach(panel => {
+      if (panel) panel.style.display = "none";
+    });
+
+    // 顯示指定 panel
+    panels[activeKey].style.display = "block";
+
+    setActiveBtn(activeKey);
+  }
+
+  // 3️⃣ 按鈕 active 狀態
+  function setActiveBtn(activeKey) {
+    document
+      .querySelectorAll(".tab-btn")
+      .forEach(btn => btn.classList.remove("is-active"));
+
+    const btnMap = {
+      overview: "btnOverview",
+      fix: "btnFix",
+      flow: "btnFlow",
+      result: "btnResult",
+      record: "btnRecord" // ← 新增
+    };
+
+    const activeBtn = document.getElementById(btnMap[activeKey]);
+    activeBtn?.classList.add("is-active");
+  }
+
+  // 4️⃣ 綁定按鈕事件（集中在一起）
+  document.getElementById("btnOverview")?.addEventListener("click", () => switchTab("overview"));
+  document.getElementById("btnFix")?.addEventListener("click", () => switchTab("fix"));
+  document.getElementById("btnFlow")?.addEventListener("click", () => switchTab("flow"));
+  document.getElementById("btnResult")?.addEventListener("click", () => switchTab("result"));
+  document.getElementById("btnRecord")?.addEventListener("click", () => switchTab("record"));
+
+  // 5️⃣ 預設顯示頁（可改）
+  switchTab("overview");
     
   </script>
 </body>
 </html>
+
 
 
 
