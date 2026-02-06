@@ -2453,12 +2453,20 @@
     saveAll(all);
   });
 })();
+    fetch('https://script.google.com/macros/s/AKfycbwaSXlxD1sXuYa8LG4S52DgzJyf0odW2du87f2IND765-9FSmGZLUBQykkTLjv9b4qdRg/exec')
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    // 這裡把 data 塞進你現在的表格 UI
+  });
+
 
 
 </script>
 
 </body>
 </html>
+
 
 
 
