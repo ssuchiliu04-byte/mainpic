@@ -1112,6 +1112,145 @@
               </div>
             </div>
 
+            <!-- Q1~Q3 (Discussion - replace your Q1/Q2/Q3 blocks with this whole section) -->
+<div class="space-y-10">
+
+  <!-- Q1 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden" id="qa-q1">
+    <!-- Q: fixed -->
+    <div class="p-8 border-b border-gray-100">
+      <h3 class="text-xl font-bold text-gray-900 mb-2">Q1. 產品及圖示擺設的規範</h3>
+      <p class="text-gray-600">
+        當商品有數種顏色時是否全部配置？同一系列大小如 SSD / DRAM / PHD 的排法是否統一方向？記憶卡是否全數擺出？ 獎項是否可有可無(佔了部分空間)?
+      </p>
+    </div>
+
+    <!-- A: editable -->
+    <div class="p-8" data-fixed-qa="q1">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="text-sm font-bold text-gray-700">A（回應）</div>
+          <div class="text-xs text-gray-400 mt-1 fixed-a-savedat"></div>
+        </div>
+
+        <div class="flex gap-2 flex-shrink-0">
+          <button type="button" class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">
+            儲存回應
+          </button>
+          <button type="button" class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200">
+            取消
+          </button>
+          <button type="button" class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black">
+            編輯回應
+          </button>
+        </div>
+      </div>
+
+      <textarea
+        class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        disabled
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden" id="qa-q2">
+    <!-- Q: fixed -->
+    <div class="p-8 border-b border-gray-100">
+      <h3 class="text-xl font-bold text-gray-900 mb-2">Q2. 右方文字規範區域何為第一優先曝光？</h3>
+      <p class="text-gray-600">
+        部分商品層級是保固為第一優先，是否需要統一標準，逐分類規劃亦或統一規範。
+      </p>
+    </div>
+
+    <!-- A: editable -->
+    <div class="p-8" data-fixed-qa="q2">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="text-sm font-bold text-gray-700">A（回應）</div>
+          <div class="text-xs text-gray-400 mt-1 fixed-a-savedat"></div>
+        </div>
+
+        <div class="flex gap-2 flex-shrink-0">
+          <button type="button" class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">
+            儲存回應
+          </button>
+          <button type="button" class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200">
+            取消
+          </button>
+          <button type="button" class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black">
+            編輯回應
+          </button>
+        </div>
+      </div>
+
+      <textarea
+        class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        disabled
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden" id="qa-q3">
+    <!-- Q: fixed -->
+    <div class="p-8 border-b border-gray-100">
+      <h3 class="text-xl font-bold text-gray-900 mb-2">Q3. 是否有其他須調整的部分</h3>
+      <p class="text-gray-600">
+        例如：視覺一致性、資訊密度、圖片裁切容錯、不同平台縮放後可讀性等。
+      </p>
+    </div>
+
+    <!-- A: editable -->
+    <div class="p-8" data-fixed-qa="q3">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="text-sm font-bold text-gray-700">A（回應）</div>
+          <div class="text-xs text-gray-400 mt-1 fixed-a-savedat"></div>
+        </div>
+
+        <div class="flex gap-2 flex-shrink-0">
+          <button type="button" class="btn-save-a hidden px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">
+            儲存回應
+          </button>
+          <button type="button" class="btn-cancel-a hidden px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200">
+            取消
+          </button>
+          <button type="button" class="btn-edit-a px-3 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black">
+            編輯回應
+          </button>
+        </div>
+      </div>
+
+      <textarea
+        class="mt-4 w-full min-h-[140px] rounded-xl border border-gray-200 p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        disabled
+      ></textarea>
+    </div>
+  </div>
+
+</div>
+
+
+              <!-- Dynamic QA: Add Question Button -->
+<div class="mt-8 flex items-center justify-between">
+   <button id="addQaBtn"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+    <span class="text-lg leading-none">＋</span>
+    增加問題
+  </button>
+</div>
+
+<!-- Dynamic QA list -->
+<div id="dynamicQaList" class="mt-4 space-y-6"></div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
     <!-- ===================== TAB 3：執行流程 ===================== -->
     <div id="tab-howto" class="tab-panel">
 <section id="process" class="py-16 bg-white border-y border-gray-200">
@@ -1385,7 +1524,7 @@
   </div>
 </section>
     </div>
-<!-- ===================== TAB 5：紀錄事項（手動維護） ===================== -->
+<!-- ===================== TAB 5：紀錄事項 ===================== -->
 <div id="tab-record" class="tab-panel">
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1403,47 +1542,119 @@
       <div class="grid md:grid-cols-2 gap-10">
 
         <!-- Q1 -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-8">
-          <h3 class="text-xl font-bold text-gray-900 mb-4">Q1</h3>
-          <div class="space-y-4" id="recordQ1">
-            <!-- 👇 把「單筆 item 模板」貼在這裡，想加幾筆就加幾筆 -->
-<!-- 單筆紀錄 item -->
-<div class="rounded-2xl border border-gray-200 bg-white p-4">
-  <div class="text-sm text-gray-900 font-medium">提供 OP30 Sylvia Ellen 此專案網站 預計下周討論</div>
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q1｜PChome 產品主圖規劃與落實（TW）
+          </h3>
 
-  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-    <span class="px-2 py-0.5 rounded-full border border-gray-200">2026/02/05</span>
-    <span class="px-2 py-0.5 rounded-full border border-gray-200">Done</span>
-  </div>
+          <div class="space-y-4 text-sm text-gray-700">
+            <!-- 執行紀錄（可新增 / 儲存 / 修改） -->
+            <div class="mt-4" data-record-scope="q1">
+              <div class="text-sm font-bold text-gray-900 mb-3">執行紀錄：</div>
 
-  <!-- 有備註就留著，沒有就整段刪掉 -->
-  <!-- <div class="mt-2 text-xs text-gray-500">備註：XXX</div> -->
-</div>
+              <div class="grid grid-cols-12 gap-3 items-center text-xs text-gray-500 px-2">
+                <div class="col-span-3">日期</div>
+                <div class="col-span-7">執行項目</div>
+                <div class="col-span-2 text-right">完成與否</div>
+              </div>
 
+              <div class="mt-2 space-y-3" data-record-list></div>
+
+              <div class="mt-4 flex justify-end">
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-record-add>
+                  新增一欄
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Q2 -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-8">
-          <h3 class="text-xl font-bold text-gray-900 mb-4">Q2</h3>
-          <div class="space-y-4" id="recordQ2">
-            <!-- items -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q2｜Shopee（EN）主圖版面語言設定
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div class="mt-4" data-record-scope="q2">
+              <div class="text-sm font-bold text-gray-900 mb-3">執行紀錄：</div>
+
+              <div class="grid grid-cols-12 gap-3 items-center text-xs text-gray-500 px-2">
+                <div class="col-span-3">日期</div>
+                <div class="col-span-7">執行項目</div>
+                <div class="col-span-2 text-right">完成與否</div>
+              </div>
+
+              <div class="mt-2 space-y-3" data-record-list></div>
+
+              <div class="mt-4 flex justify-end">
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-record-add>
+                  新增一欄
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Q3 -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-8">
-          <h3 class="text-xl font-bold text-gray-900 mb-4">Q3</h3>
-          <div class="space-y-4" id="recordQ3">
-            <!-- items -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q3｜Shopee（TW / MY）主圖落實
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div class="mt-4" data-record-scope="q3">
+              <div class="text-sm font-bold text-gray-900 mb-3">執行紀錄：</div>
+
+              <div class="grid grid-cols-12 gap-3 items-center text-xs text-gray-500 px-2">
+                <div class="col-span-3">日期</div>
+                <div class="col-span-7">執行項目</div>
+                <div class="col-span-2 text-right">完成與否</div>
+              </div>
+
+              <div class="mt-2 space-y-3" data-record-list></div>
+
+              <div class="mt-4 flex justify-end">
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-record-add>
+                  新增一欄
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Q4 -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-8">
-          <h3 class="text-xl font-bold text-gray-900 mb-4">Q4</h3>
-          <div class="space-y-4" id="recordQ4">
-            <!-- items -->
+        <div class="rounded-2xl border border-gray-300 bg-white p-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Q4｜Coupang（KR）主圖規劃
+          </h3>
+
+          <div class="space-y-4 text-sm text-gray-700">
+            <div class="mt-4" data-record-scope="q4">
+              <div class="text-sm font-bold text-gray-900 mb-3">執行紀錄：</div>
+
+              <div class="grid grid-cols-12 gap-3 items-center text-xs text-gray-500 px-2">
+                <div class="col-span-3">日期</div>
+                <div class="col-span-7">執行項目</div>
+                <div class="col-span-2 text-right">完成與否</div>
+              </div>
+
+              <div class="mt-2 space-y-3" data-record-list></div>
+
+              <div class="mt-4 flex justify-end">
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-record-add>
+                  新增一欄
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1451,8 +1662,6 @@
     </div><!-- /container -->
   </section>
 </div>
-
-
         
   <script>
   // 你的圖片來源 repo
@@ -1574,14 +1783,14 @@
     picfix: document.getElementById("tab-picfix"),
     howto: document.getElementById("tab-howto"),
     follow: document.getElementById("tab-follow"),
-    record: document.getElementById("tab-record"),
+    record: document.getElementById("tab-record"), // ✅ 新增：紀錄事項
   };
 
   const btnOverview = document.getElementById("btnOverview");
   const btnPicfix = document.getElementById("btnPicfix");
   const btnHowto = document.getElementById("btnHowto");
   const btnFollow = document.getElementById("btnFollow");
-  const btnRecord = document.getElementById("btnRecord");
+  const btnRecord = document.getElementById("btnRecord"); // ✅ 新增：紀錄事項按鈕
   const overviewDropdown = document.getElementById("overviewDropdown");
 
   function setActiveBtn(activeKey) {
@@ -1590,7 +1799,7 @@
     if (activeKey === "picfix") btnPicfix?.classList.add("is-active");
     if (activeKey === "howto") btnHowto?.classList.add("is-active");
     if (activeKey === "follow") btnFollow?.classList.add("is-active");
-    if (activeKey === "record") btnRecord?.classList.add("is-active");
+    if (activeKey === "record") btnRecord?.classList.add("is-active"); // ✅ 新增
   }
 
   function switchTab(key) {
@@ -1598,11 +1807,13 @@
     panels[key]?.classList.add("is-active");
     setActiveBtn(key);
 
+    // 關掉 dropdown + mobile menu
     overviewDropdown?.classList.remove("is-open");
     mobileMenu?.classList.add("hidden");
     menuIcon?.classList.remove("hidden");
     closeIcon?.classList.add("hidden");
 
+    // 進新頁面就回到上方（像換頁）
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -1610,19 +1821,21 @@
   btnPicfix?.addEventListener("click", () => switchTab("picfix"));
   btnHowto?.addEventListener("click", () => switchTab("howto"));
   btnFollow?.addEventListener("click", () => switchTab("follow"));
-  btnRecord?.addEventListener("click", () => switchTab("record"));
+  btnRecord?.addEventListener("click", () => switchTab("record")); // ✅ 新增
 
-  // 規範總覽 dropdown
+  // 規範總覽按鈕：點一下開/關 dropdown，但也要確保在 guide 頁
   btnOverview?.addEventListener("click", () => {
     if (!panels.guide?.classList.contains("is-active")) switchTab("guide");
     overviewDropdown?.classList.toggle("is-open");
   });
 
+  // dropdown jump
   document.querySelectorAll("[data-jump]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.getAttribute("data-jump");
       if (!panels.guide?.classList.contains("is-active")) switchTab("guide");
       overviewDropdown?.classList.remove("is-open");
+
       setTimeout(() => {
         const el = document.querySelector(target);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1676,17 +1889,594 @@
     item.addEventListener("click", () => {
       hierList.querySelectorAll(".hier-item").forEach((i) => i.classList.remove("is-active"));
       item.classList.add("is-active");
+
       const target = item.getAttribute("data-target");
       setZoneActive(target);
     });
   });
 
+  // Default
   setZoneActive("zone-main");
 
-  
+  /* =========================
+     Dynamic Q/A (localStorage)
+     - Q: save once, then locked
+     - A: can save & edit
+  ========================= */
+  const QA_STORAGE_KEY = "sp_guideline_dynamic_qas_v1";
+  const dynamicQaList = document.getElementById("dynamicQaList");
+  const addQaBtn = document.getElementById("addQaBtn");
 
- 
+  function getBaseQCount() {
+    // 你目前固定有 Q1~Q3
+    return 3;
+  }
+
+  function loadQAs() {
+    try {
+      const raw = localStorage.getItem(QA_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveQAs(qas) {
+    localStorage.setItem(QA_STORAGE_KEY, JSON.stringify(qas));
+  }
+
+  function escapeHtml(str) {
+    return (str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function renderQAs() {
+    if (!dynamicQaList) return;
+
+    const qas = loadQAs();
+    dynamicQaList.innerHTML = qas
+      .map((qa, idx) => {
+        const qNo = getBaseQCount() + idx + 1;
+
+        const qValue = escapeHtml(qa.qText);
+        const aValue = escapeHtml(qa.aText);
+
+        const qLocked = !!qa.qLocked;
+        const aEditing = !!qa.aEditing;
+
+        return `
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden" data-qa-index="${idx}">
+            <div class="p-6 md:p-8">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900">Q${qNo}. ${qLocked ? "（已鎖定）" : ""}</h3>
+                  <p class="text-sm text-gray-500 mt-1">Q 儲存後不可修改，A 可持續編修。</p>
+                </div>
+
+                <button class="delete-qa text-sm text-gray-400 hover:text-red-600 transition" title="刪除這一題">
+                  刪除
+                </button>
+              </div>
+
+              <!-- Q -->
+              <div class="mt-6">
+                <div class="flex items-center justify-between">
+                  <div class="font-bold text-gray-900">Q（問題）</div>
+                  ${
+                    qLocked
+                      ? `<span class="text-xs text-gray-500">已儲存並鎖定</span>`
+                      : `<button class="save-q px-3 py-1.5 rounded-md bg-gray-900 text-white text-xs font-semibold hover:bg-black transition">
+                           儲存問題（鎖定）
+                         </button>`
+                  }
+                </div>
+
+                <textarea
+                  class="mt-3 w-full min-h-[120px] rounded-xl border border-gray-200 bg-white p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  placeholder="輸入問題內容..."
+                  ${qLocked ? "disabled" : ""}
+                >${qValue}</textarea>
+              </div>
+
+              <!-- A -->
+              <div class="mt-8">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="font-bold text-gray-900">A（回應）</div>
+                  <div class="flex items-center gap-2">
+                    ${
+                      aEditing
+                        ? `
+                          <button class="save-a px-3 py-1.5 rounded-md bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">
+                            儲存回應
+                          </button>
+                          <button class="cancel-a px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition">
+                            取消
+                          </button>
+                        `
+                        : `
+                          <button class="edit-a px-3 py-1.5 rounded-md bg-gray-900 text-white text-xs font-semibold hover:bg-black transition">
+                            編輯回應
+                          </button>
+                        `
+                    }
+                  </div>
+                </div>
+
+                <textarea
+                  class="mt-3 w-full min-h-[140px] rounded-xl border border-gray-200 bg-white p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  placeholder="輸入回應內容..."
+                  ${aEditing ? "" : "disabled"}
+                >${aValue}</textarea>
+
+                <div class="mt-2 text-xs text-gray-400">
+                  ${qa.aSavedAt ? `最後儲存：${escapeHtml(qa.aSavedAt)}` : ""}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function addNewQA() {
+    const qas = loadQAs();
+    qas.push({
+      qText: "",
+      qLocked: false,
+      aText: "",
+      aEditing: true,
+      aSavedAt: "",
+    });
+    saveQAs(qas);
+    renderQAs();
+
+    const lastCard = dynamicQaList?.lastElementChild;
+    if (lastCard) lastCard.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  addQaBtn?.addEventListener("click", addNewQA);
+
+  dynamicQaList?.addEventListener("click", (e) => {
+    const card = e.target.closest("[data-qa-index]");
+    if (!card) return;
+
+    const idx = Number(card.getAttribute("data-qa-index"));
+    const qas = loadQAs();
+    const qa = qas[idx];
+    if (!qa) return;
+
+    const textareas = card.querySelectorAll("textarea");
+    const qTa = textareas[0];
+    const aTa = textareas[1];
+
+    // 刪除
+    if (e.target.closest(".delete-qa")) {
+      if (confirm("確定要刪除這一題嗎？")) {
+        qas.splice(idx, 1);
+        saveQAs(qas);
+        renderQAs();
+      }
+      return;
+    }
+
+    // 儲存 Q 並鎖定
+    if (e.target.closest(".save-q")) {
+      const qText = (qTa?.value ?? "").trim();
+      if (!qText) {
+        alert("Q 內容不能空白。");
+        return;
+      }
+      qa.qText = qText;
+      qa.qLocked = true;
+      saveQAs(qas);
+      renderQAs();
+      return;
+    }
+
+    // 編輯 A
+    if (e.target.closest(".edit-a")) {
+      qa.aEditing = true;
+      saveQAs(qas);
+      renderQAs();
+      return;
+    }
+
+    // 取消 A 編輯
+    if (e.target.closest(".cancel-a")) {
+      qa.aEditing = false;
+      saveQAs(qas);
+      renderQAs();
+      return;
+    }
+
+    // 儲存 A
+    if (e.target.closest(".save-a")) {
+      const aText = (aTa?.value ?? "").trim();
+      qa.aText = aText;
+      qa.aEditing = false;
+      qa.aSavedAt = new Date().toLocaleString("zh-Hant", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      saveQAs(qas);
+      renderQAs();
+      return;
+    }
+  });
+
+  // 初始化
+  renderQAs();
+
+  /* =========================
+     Fixed Q1/Q2/Q3 Answer Save/Edit
+     - A 可儲存、可再次編輯
+  ========================= */
+  const FIXED_A_KEY = "sp_guideline_fixed_answers_v1";
+
+  function loadFixedAnswers() {
+    try {
+      const raw = localStorage.getItem(FIXED_A_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveFixedAnswers(obj) {
+    localStorage.setItem(FIXED_A_KEY, JSON.stringify(obj));
+  }
+
+  function initFixedAnswerBlocks() {
+    const store = loadFixedAnswers();
+    const blocks = document.querySelectorAll("[data-fixed-qa]");
+
+    blocks.forEach((block) => {
+      const key = block.getAttribute("data-fixed-qa"); // q1/q2/q3
+      const ta = block.querySelector("textarea");
+      const editBtn = block.querySelector(".btn-edit-a");
+      const saveBtn = block.querySelector(".btn-save-a");
+      const cancelBtn = block.querySelector(".btn-cancel-a");
+      const savedAtEl = block.querySelector(".fixed-a-savedat");
+
+      if (!key || !ta || !editBtn || !saveBtn || !cancelBtn || !savedAtEl) return;
+
+      // 初始載入
+      const saved = store[key];
+      if (saved?.text) ta.value = saved.text;
+      if (saved?.savedAt) savedAtEl.textContent = `最後儲存：${saved.savedAt}`;
+
+      // 預設：不可編輯
+      ta.disabled = true;
+      saveBtn.classList.add("hidden");
+      cancelBtn.classList.add("hidden");
+      editBtn.classList.remove("hidden");
+
+      // 編輯
+      editBtn.addEventListener("click", () => {
+        ta.dataset.beforeEdit = ta.value;
+        ta.disabled = false;
+        ta.focus();
+
+        saveBtn.classList.remove("hidden");
+        cancelBtn.classList.remove("hidden");
+        editBtn.classList.add("hidden");
+      });
+
+      // 取消
+      cancelBtn.addEventListener("click", () => {
+        ta.value = ta.dataset.beforeEdit ?? ta.value;
+        ta.disabled = true;
+
+        saveBtn.classList.add("hidden");
+        cancelBtn.classList.add("hidden");
+        editBtn.classList.remove("hidden");
+      });
+
+      // 儲存
+      saveBtn.addEventListener("click", () => {
+        const text = (ta.value ?? "").trim();
+        const now = new Date().toLocaleString("zh-Hant", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        const nextStore = loadFixedAnswers();
+        nextStore[key] = { text, savedAt: now };
+        saveFixedAnswers(nextStore);
+
+        savedAtEl.textContent = `最後儲存：${now}`;
+
+        ta.disabled = true;
+        saveBtn.classList.add("hidden");
+        cancelBtn.classList.add("hidden");
+        editBtn.classList.remove("hidden");
+      });
+    });
+  }
+
+  // 初始化固定Q的A區塊
+  initFixedAnswerBlocks();
+/* =========================
+   Record Logs (Q1~Q4)
+   - add rows
+   - save to localStorage
+   - edit / update
+   - delete
+   - checkbox done
+========================= */
+(function initRecordLogs() {
+  const STORAGE_KEY = "sp_guideline_record_logs_v1";
+
+  function loadAll() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+  function saveAll(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // 每個 scope(q1~q4) 的資料結構：[{ id, date, task, done, locked }]
+  function ensureScope(data, scope) {
+    if (!data[scope]) data[scope] = [];
+    return data[scope];
+  }
+
+  function uid() {
+    return Math.random().toString(16).slice(2) + Date.now().toString(16);
+  }
+
+  function esc(str) {
+    return (str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function rowTemplate(row) {
+    const isLocked = !!row.locked;
+
+    return `
+      <div class="bg-white border border-gray-200 rounded-2xl p-4" data-row-id="${row.id}">
+        <div class="grid grid-cols-12 gap-3 items-start">
+          <!-- 日期 -->
+          <div class="col-span-12 md:col-span-3">
+            <input type="date"
+              class=type="text"
+  class="w-full min-w-0 px-4 py-3 text-lg rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-200"
+  placeholder="YYYY/MM/DD"
+            />
+          </div>
+
+          <!-- 執行項目 -->
+          <div class="col-span-12 md:col-span-7">
+            <textarea
+              class="w-full min-h-[44px] rounded-xl border border-gray-200 px-3 py-2 text-sm"
+              placeholder="此區可撰寫，撰寫完畢可儲存也可修正"
+              ${isLocked ? "disabled" : "" }
+              data-field="task"
+            >${esc(row.task)}</textarea>
+          </div>
+
+          <!-- 完成與否 -->
+          <div class="col-span-12 md:col-span-2 flex items-center justify-between md:justify-end gap-3">
+            <label class="flex items-center gap-2 text-sm text-gray-700 select-none">
+              <input type="checkbox" class="w-4 h-4" ${row.done ? "checked" : ""} data-field="done" />
+              勾選
+            </label>
+          </div>
+        </div>
+
+        <!-- 操作列 -->
+        <div class="mt-3 flex flex-wrap items-center justify-end gap-2">
+          ${
+            isLocked
+              ? `
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-action="edit">
+                  修改按鈕
+                </button>
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-action="delete">
+                  刪除
+                </button>
+              `
+              : `
+                <button type="button"
+                  class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-black"
+                  data-action="save">
+                  儲存按鈕
+                </button>
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-action="cancel">
+                  取消
+                </button>
+                <button type="button"
+                  class="px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold hover:bg-gray-50"
+                  data-action="delete">
+                  刪除
+                </button>
+              `
+          }
+        </div>
+      </div>
+    `;
+  }
+
+  function render(scopeWrap) {
+    const scope = scopeWrap.getAttribute("data-record-scope");
+    const listEl = scopeWrap.querySelector("[data-record-list]");
+    if (!scope || !listEl) return;
+
+    const all = loadAll();
+    const rows = ensureScope(all, scope);
+
+    listEl.innerHTML = rows.map(rowTemplate).join("");
+  }
+
+  function addRow(scopeWrap) {
+    const scope = scopeWrap.getAttribute("data-record-scope");
+    if (!scope) return;
+
+    const all = loadAll();
+    const rows = ensureScope(all, scope);
+
+    rows.push({
+      id: uid(),
+      date: "",
+      task: "",
+      done: false,
+      locked: false
+    });
+
+    saveAll(all);
+    render(scopeWrap);
+
+    // 捲到最後一筆
+    const listEl = scopeWrap.querySelector("[data-record-list]");
+    const last = listEl?.lastElementChild;
+    last?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // 初始化 render
+  document.querySelectorAll("[data-record-scope]").forEach(render);
+
+  // 新增一欄
+  document.addEventListener("click", (e) => {
+    const addBtn = e.target.closest("[data-record-add]");
+    if (!addBtn) return;
+    const scopeWrap = addBtn.closest("[data-record-scope]");
+    if (scopeWrap) addRow(scopeWrap);
+  });
+
+  // 列內操作（事件委派）
+  document.addEventListener("click", (e) => {
+    const rowEl = e.target.closest("[data-row-id]");
+    if (!rowEl) return;
+
+    const scopeWrap = rowEl.closest("[data-record-scope]");
+    const scope = scopeWrap?.getAttribute("data-record-scope");
+    const rowId = rowEl.getAttribute("data-row-id");
+    if (!scopeWrap || !scope || !rowId) return;
+
+    const actionBtn = e.target.closest("[data-action]");
+    if (!actionBtn) return;
+
+    const action = actionBtn.getAttribute("data-action");
+    const all = loadAll();
+    const rows = ensureScope(all, scope);
+    const row = rows.find(r => r.id === rowId);
+    if (!row) return;
+
+    const dateInput = rowEl.querySelector("[data-field='date']");
+    const taskTa = rowEl.querySelector("[data-field='task']");
+    const doneCb = rowEl.querySelector("[data-field='done']");
+
+    if (action === "delete") {
+      rows.splice(rows.findIndex(r => r.id === rowId), 1);
+      saveAll(all);
+      render(scopeWrap);
+      return;
+    }
+
+    if (action === "cancel") {
+      // 取消: 直接回存檔狀態重 render
+      render(scopeWrap);
+      return;
+    }
+
+    if (action === "edit") {
+      row.locked = false;
+      saveAll(all);
+      render(scopeWrap);
+      return;
+    }
+
+    if (action === "save") {
+      const nextDate = (dateInput?.value ?? "").trim();
+      const nextTask = (taskTa?.value ?? "").trim();
+      const nextDone = !!doneCb?.checked;
+
+      // 你要的「此區可撰寫」效果：可以允許 task 空白，但日期建議至少填一個
+      if (!nextDate && !nextTask) {
+        alert("請至少填寫日期或執行項目其中一項。");
+        return;
+      }
+
+      row.date = nextDate;
+      row.task = nextTask;
+      row.done = nextDone;
+      row.locked = true;
+
+      saveAll(all);
+      render(scopeWrap);
+      return;
+    }
+  });
+
+  // 勾選 done（不必按儲存也可即時存，符合你圖上「勾選」直覺）
+  document.addEventListener("change", (e) => {
+    const cb = e.target.closest("[data-field='done']");
+    if (!cb) return;
+
+    const rowEl = cb.closest("[data-row-id]");
+    const scopeWrap = cb.closest("[data-record-scope]");
+    const scope = scopeWrap?.getAttribute("data-record-scope");
+    const rowId = rowEl?.getAttribute("data-row-id");
+    if (!scopeWrap || !scope || !rowId) return;
+
+    const all = loadAll();
+    const rows = ensureScope(all, scope);
+    const row = rows.find(r => r.id === rowId);
+    if (!row) return;
+
+    row.done = !!cb.checked;
+    saveAll(all);
+  });
+})();
+
+
+
 </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
