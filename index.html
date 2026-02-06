@@ -1524,7 +1524,7 @@
   </div>
 </section>
     </div>
-<!-- ===================== TAB 5：紀錄事項 ===================== -->
+<!-- ===================== TAB 5：紀錄事項（手動維護） ===================== -->
 <div id="tab-record" class="tab-panel">
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1544,40 +1544,40 @@
         <!-- Q1 -->
         <div class="rounded-2xl border border-gray-200 bg-white p-8">
           <h3 class="text-xl font-bold text-gray-900 mb-4">Q1</h3>
-          <div data-record-scope="Q1">
-            <div class="space-y-3" data-record-list></div>
+          <div class="space-y-4" id="recordQ1">
+            <!-- 👇 把「單筆 item 模板」貼在這裡，想加幾筆就加幾筆 -->
           </div>
         </div>
 
         <!-- Q2 -->
         <div class="rounded-2xl border border-gray-200 bg-white p-8">
           <h3 class="text-xl font-bold text-gray-900 mb-4">Q2</h3>
-          <div data-record-scope="Q2">
-            <div class="space-y-3" data-record-list></div>
+          <div class="space-y-4" id="recordQ2">
+            <!-- items -->
           </div>
         </div>
 
         <!-- Q3 -->
         <div class="rounded-2xl border border-gray-200 bg-white p-8">
           <h3 class="text-xl font-bold text-gray-900 mb-4">Q3</h3>
-          <div data-record-scope="Q3">
-            <div class="space-y-3" data-record-list></div>
+          <div class="space-y-4" id="recordQ3">
+            <!-- items -->
           </div>
         </div>
 
         <!-- Q4 -->
         <div class="rounded-2xl border border-gray-200 bg-white p-8">
           <h3 class="text-xl font-bold text-gray-900 mb-4">Q4</h3>
-          <div data-record-scope="Q4">
-            <div class="space-y-3" data-record-list></div>
+          <div class="space-y-4" id="recordQ4">
+            <!-- items -->
           </div>
         </div>
 
       </div><!-- /grid -->
-
     </div><!-- /container -->
   </section>
 </div>
+
 
         
   <script>
@@ -2001,103 +2001,8 @@
 
   renderQAs();
 
-  /* =========================
-     Record: read-only from Google Sheet (Q1~Q4)
-     - no headers
-     - no buttons
-  ========================= */
-
-  // ✅ 你不要功能：隱藏所有新增按鈕（保險起見）
-  document.querySelectorAll("[data-record-add]").forEach((btn) => (btn.style.display = "none"));
-
-  const API_BASE =
-    "https://script.google.com/macros/s/AKfycbwaSXlxD1sXuYa8LG4S52DgzJyf0odW2du87f2IND765-9FSmGZLUBQykkTLjv9b4qdRg/exec";
-
-  function formatDateTW(value) {
-    if (!value) return "";
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return String(value).slice(0, 10);
-    return new Intl.DateTimeFormat("zh-TW", {
-      timeZone: "Asia/Taipei",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }).format(d);
-  }
-
-  function esc(str) {
-    return (str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function renderScope(scope, rows) {
-    const scopeEl = document.querySelector(`[data-record-scope="${scope}"]`);
-    const listEl = scopeEl?.querySelector("[data-record-list]");
-    if (!listEl) return;
-
-    if (!rows || rows.length === 0) {
-      listEl.innerHTML = `<div class="text-sm text-gray-400 px-2 py-2">尚無資料</div>`;
-      return;
-    }
-
-    listEl.innerHTML = rows
-      .map((r) => {
-        const dateStr = formatDateTW(r.Date);
-        const task = esc(r.Task ?? "");
-        const status = esc(r.Status ?? "");
-        const notes = esc(r.Notes ?? "");
-
-        return `
-          <div class="rounded-2xl border border-gray-200 bg-white p-4">
-            <div class="text-sm text-gray-900 font-medium">${task || "（未填寫執行項目）"}</div>
-            <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-              ${dateStr ? `<span class="px-2 py-0.5 rounded-full border border-gray-200">${dateStr}</span>` : ""}
-              ${status ? `<span class="px-2 py-0.5 rounded-full border border-gray-200">${status}</span>` : ""}
-            </div>
-            ${notes ? `<div class="mt-2 text-xs text-gray-500">備註：${notes}</div>` : ""}
-          </div>
-        `;
-      })
-      .join("");
-  }
-
-  async function loadSheet(sheetName) {
-    const url = `${API_BASE}?sheet=${encodeURIComponent(sheetName)}`;
-    const res = await fetch(url);
-    const json = await res.json();
-
-    // 兼容兩種回傳：[] 或 {ok:true,data:[]}
-    if (Array.isArray(json)) return json;
-    if (json?.ok && Array.isArray(json.data)) return json.data;
-
-    console.error("API response unexpected:", json);
-    return [];
-  }
-
-  async function loadAllQuarters() {
-    const map = [
-      { sheet: "Q1", scope: "Q1" },
-      { sheet: "Q2", scope: "Q2" },
-      { sheet: "Q3", scope: "Q3" },
-      { sheet: "Q4", scope: "Q4" },
-    ];
-
-    await Promise.all(
-      map.map(async ({ sheet, scope }) => {
-        const rows = await loadSheet(sheet);
-        renderScope(scope, rows);
-      })
-    );
-  }
-
-  // ✅ 唯一入口：只留這個（不要重複綁兩次）
-  document.addEventListener("DOMContentLoaded", () => {
-    loadAllQuarters();
-  });
+ 
 </script>
+
 
 
