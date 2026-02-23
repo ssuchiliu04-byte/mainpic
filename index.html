@@ -369,91 +369,119 @@
       </section>
 
       <!-- Grid -->
-      <section id="grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-900">1.1 版面結構 (Grid System)</h2>
-        </div>
+<section id="grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center gap-3 mb-8">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"/>
+      <rect x="14" y="3" width="7" height="7"/>
+      <rect x="14" y="14" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/>
+    </svg>
+    <h2 class="text-2xl font-bold text-gray-900">1.1 版面結構 (Grid System)</h2>
+  </div>
 
-        <div class="grid lg:grid-cols-12 gap-8 mb-16">
-          <div class="lg:col-span-5">
-            <img
-              id="gridAllocation"
-              src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_allocation.png"
-              alt="Grid Allocation"
-              class="w-full rounded-xl shadow-lg border border-gray-100 cursor-zoom-in hover:scale-110 transition duration-300 z-10"
-              data-lightbox="true"
-            />
-            <div class="text-center text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/>
-              </svg>
-              點擊放大
-            </div>
-          </div>
+  <!-- 頂部品牌識別條（保留） -->
+  <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-10">
+    <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">
+      頂部：品牌識別條
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <div>
+        <span class="block text-gray-500 mb-1">尺寸</span>
+        <span class="font-mono font-medium text-gray-900">1200 x 120 px</span>
+      </div>
+      <div>
+        <span class="block text-gray-500 mb-1">字體規範</span>
+        <div class="font-medium text-gray-900">Noto Sans TC - Black / 60 pt</div>
+        <div class="font-medium text-gray-900">Poppins / 英文 數字</div>
+        <div class="text-xs text-gray-400 mt-1">VA 0 / 與 SP Logo 置中</div>
+      </div>
+    </div>
+  </div>
 
-          <div class="lg:col-span-7 space-y-8">
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">頂部：品牌識別條</h3>
-              <div class="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span class="block text-gray-500 mb-1">尺寸</span>
-                  <span class="font-mono font-medium text-gray-900">1200 x 120 px</span>
-                </div>
-                <div>
-                  <span class="block text-gray-500 mb-1">字體規範</span>
-                  <span class="font-medium text-gray-900">Noto Sans TC - Black / 60 pt</span>
-                  <span class="font-medium text-gray-900">Poppins / 英文 數字 /<span>
-                  <div class="text-xs text-gray-400 mt-1">VA 0 / 與 SP Logo 置中</div>
-                </div>
-              </div>
-            </div>
+  <!-- 兩張圖並排 -->
+  <div class="grid md:grid-cols-2 gap-8">
 
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">中間產品區域 (840 x 960 px)</h3>
-              <div class="flex flex-col md:flex-row gap-6">
-                <div class="flex-1">
-                  <h4 class="font-semibold text-blue-700 mb-2">左側 2/3 產品區</h4>
-                  <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    <li>產品展示 (750 x 800 px)</li>
-                    <li>容量標示</li>
-                    <li>得獎資訊 (220 x 110 px)</li>
-                    <li>產品型號 (530 x 70 px)</li>
-                  </ul>
-                </div>
-                <div class="flex-1">
-                  <h4 class="font-semibold text-blue-700 mb-2">右側 1/3 資訊區</h4>
-                  <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    <li>文字規格資訊</li>
-                    <li>垂直排列</li>
-                    <li>尺寸：360 x 1080 px</li>
-                  </ul>
-                </div>
-              </div>
+    <!-- 左圖 -->
+    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
 
-              <div class="mt-4 pt-4 border-t border-gray-100">
-                <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_size.png"
-                     alt="Size Detail"
-                     class="w-full rounded border border-gray-100 hover:scale-105 transition duration-300 origin-center" />
-              </div>
-            </div>
+      <!-- 上方文案 -->
+      <div class="mb-4">
+        <h4 class="text-base font-semibold text-gray-900 mb-2">
+          中間產品區域 (840 x 960 px)
+        </h4>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          左側 2/3 為產品主視覺區（750 x 800 px），
+          包含容量標示、得獎資訊（220 x 110 px）、
+          產品型號（530 x 70 px）。
+          右側 1/3 為文字規格資訊區，
+          垂直排列，尺寸為 360 x 1080 px。
+        </p>
+      </div>
 
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-              <h3 class="text-lg font-bold text-gray-900 mb-3 border-b border-gray-100 pb-2">底部：廣告預留區</h3>
-              <div class="text-sm">
-                <span class="block text-gray-500 mb-1">尺寸</span>
-                <span class="font-mono font-medium text-gray-900">840 x 120 px</span>
-                <p class="text-gray-600 mt-2">作為電商廣告 AD 展示預留空間</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- 圖 -->
+      <img
+        src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_size.png"
+        alt="Grid Layout"
+        class="w-full rounded-lg border border-gray-100 cursor-zoom-in"
+        data-lightbox="true"
+      />
+
+      <!-- 下方文案 -->
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <h4 class="text-base font-semibold text-gray-900 mb-2">
+          底部：廣告預留區
+        </h4>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          尺寸為 840 x 120 px，
+          作為電商廣告 AD 展示預留空間，
+          不得與主要產品資訊產生重疊。
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 右圖 -->
+    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+
+      <!-- 上方文案 -->
+      <div class="mb-4">
+        <h4 class="text-base font-semibold text-gray-900 mb-2">
+          中間產品區域 (840 x 960 px)
+        </h4>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          此區域為主視覺焦點，
+          需確保產品展示比例一致，
+          文字資訊不壓縮產品空間，
+          並維持左右區塊比例穩定。
+        </p>
+      </div>
+
+      <!-- 圖 -->
+      <img
+        src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/Grid-System_size.png"
+        alt="Grid Layout"
+        class="w-full rounded-lg border border-gray-100 cursor-zoom-in"
+        data-lightbox="true"
+      />
+
+      <!-- 下方文案 -->
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <h4 class="text-base font-semibold text-gray-900 mb-2">
+          底部：廣告預留區
+        </h4>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          AD 區為固定保留空間，
+          各電商平台若需延伸活動，
+          僅能於此區域內操作。
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
       <!-- Layouts -->
       <section id="layouts" class="py-16 bg-white border-y border-gray-200">
@@ -1751,6 +1779,7 @@
 
 </body>
 </html>
+
 
 
 
