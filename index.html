@@ -113,6 +113,58 @@
       color: rgb(120 53 15);
       text-align:center;
     }
+
+     /* 外框：跟你截圖一樣大框可延伸 */
+  .sp-bottom-box{
+    margin-top: 18px;
+    padding: 28px 32px;
+    border-radius: 22px;
+    border: 2px solid rgba(0,0,0,0.85);
+    background: #fff;
+  }
+
+  .sp-bottom-title{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: .5px;
+  }
+
+  /* 圖片區：多了自動換行，容器會向下延伸 */
+  .sp-bottom-gallery{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  /* 單張圖的寬度：你可以調整成 220/240/260 看起來更像你截圖 */
+  .sp-bottom-item{
+    width: 240px;
+    margin: 0;
+  }
+
+  .sp-bottom-item img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    transition: transform .18s ease;
+    transform-origin: center;
+  }
+
+  /* hover 放大 */
+  .sp-bottom-item img:hover{
+    transform: scale(1.08);
+  }
+
+  /* 圖片下方小字，不需要就刪掉整個 figcaption */
+  .sp-bottom-item figcaption{
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(0,0,0,0.65);
+  }
   </style>
 </head>
 
@@ -1892,6 +1944,7 @@
 
 </body>
 </html>
+
 
 
 
