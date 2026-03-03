@@ -263,7 +263,7 @@
         <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
                 data-tab="follow">預期成效</button>
         <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="picfix">紀錄事項</button>
+                data-tab="record">紀錄事項</button>
       </div>
     </div>
   </nav>
@@ -1910,13 +1910,18 @@
     });
   });
 
-  // Mobile tab buttons
-  mobileMenu?.querySelectorAll("[data-tab]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const key = btn.getAttribute("data-tab");
-      if (key) switchTab(key);
-    });
-  });
+  mobileMenu?.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-tab]");
+  if (!el) return;
+
+  // 如果是 <a>，避免 href 先跳走
+  e.preventDefault();
+
+  const key = el.getAttribute("data-tab");
+  console.log("[mobileMenu click] data-tab =", key);
+
+  if (key) switchTab(key);
+});
 
   // 點 mobile menu 連結後自動收起
   mobileMenu?.querySelectorAll("a").forEach((a) => {
@@ -1973,6 +1978,7 @@
 
 </body>
 </html>
+
 
 
 
