@@ -19,6 +19,102 @@
     .dropdown{ position:relative; }
     .dropdown-menu{ display:none; }
     .dropdown.is-open .dropdown-menu{ display:block; }
+    
+    /* ===== Shared Dropdown ===== */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  min-width: 220px;
+}
+
+.dropdown.is-open .dropdown-menu {
+  display: block;
+}
+
+.dropdown-chevron {
+  transition: transform .2s ease;
+}
+
+.dropdown.is-open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+/* ===== Placeholder blocks for new pages ===== */
+.placeholder-section {
+  background: #fff;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+
+.placeholder-box {
+  margin-top: 1rem;
+  min-height: 260px;
+  border: 2px dashed rgb(203 213 225);
+  background: rgb(248 250 252);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(100 116 139);
+  font-size: .95rem;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+/* ===== Mobile sub menu ===== */
+.mobile-submenu {
+  display: none;
+}
+
+.mobile-submenu.is-open {
+  display: block;
+}
+
+.mobile-subbtn {
+  width: 100%;
+  text-align: left;
+  padding: .75rem 1rem;
+  font-size: .95rem;
+  border-radius: .75rem;
+  border: 1px solid rgb(229 231 235);
+  background: white;
+  color: rgb(55 65 81);
+}
+
+.mobile-subbtn:hover {
+  background: rgb(249 250 251);
+}
+
+/* ===== Mobile dropdown trigger ===== */
+.mobile-drop-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .75rem;
+  border-radius: .75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(55 65 81);
+}
+
+.mobile-drop-trigger:hover {
+  background: rgb(249 250 251);
+}
+
+.mobile-drop-trigger svg {
+  transition: transform .2s ease;
+}
+
+.mobile-drop-trigger.is-open svg {
+  transform: rotate(180deg);
+}
 
     .navbtn{
       display:inline-flex; align-items:center; gap:.5rem;
@@ -197,31 +293,51 @@
         </div>
 
         <!-- Desktop Tabs -->
-        <div class="hidden md:flex items-center gap-3">
-          <!-- 規範總覽 (dropdown) -->
-          <div class="dropdown" id="overviewDropdown">
-            <button class="navbtn is-active" id="btnOverview" type="button">
-              規範總覽
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m6 9 6 6 6-6"/>
-              </svg>
-            </button>
-            <div class="dropdown-menu absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
-              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#overview">標準尺寸規範</button>
-              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#hierarchy">版面層級</button>
-              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#grid">網格系統</button>
-              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#layouts">排版方案</button>
-              <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#discussion">討論與調整</button>
-            </div>
-          </div>
+<div class="hidden md:flex items-center gap-3">
+  <!-- 規範總覽 -->
+  <div class="dropdown" id="guideDropdown">
+    <button class="navbtn is-active" id="btnGuide" type="button">
+      規範總覽
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 dropdown-chevron" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </button>
 
-          <button class="navbtn" id="btnPicfix" type="button">主圖修正</button>
-          <button class="navbtn" id="btnHowto" type="button">執行流程</button>
-          <button class="navbtn" id="btnFollow" type="button">預期成效</button>
-          <button class="navbtn" id="btnRecord" type="button">紀錄事項</button>
-          
-        </div>
+    <div class="dropdown-menu absolute left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50">
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#overview">標準尺寸規範</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#hierarchy">版面層級</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#grid">網格系統</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#layouts">排版方案</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-jump="#discussion">討論與調整</button>
+    </div>
+  </div>
+
+  <button class="navbtn" id="btnPicfix" type="button">主圖修正</button>
+  <button class="navbtn" id="btnHowto" type="button">執行流程</button>
+
+  <!-- 新增：電商平台進度 -->
+  <div class="dropdown" id="progressDropdown">
+    <button class="navbtn" id="btnProgress" type="button">
+      電商平台進度
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 dropdown-chevron" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </button>
+
+    <div class="dropdown-menu absolute left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50">
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-tab="progress-pchome-q1">PChome24 Q1</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-tab="progress-my-shopee">MY Shopee Q2-Q3</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-tab="progress-tw-shopee">TW Shopee Q2-Q3</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-tab="progress-kr-coupang">KR Coupang Q4</button>
+      <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50" data-tab="progress-discussion">討論與調整</button>
+    </div>
+  </div>
+
+  <button class="navbtn" id="btnFollow" type="button">預期成效</button>
+  <button class="navbtn" id="btnRecord" type="button">紀錄事項</button>
+</div>
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">
@@ -240,33 +356,60 @@
     </div>
 
     <!-- Mobile Menu Dropdown -->
-    <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100 hidden absolute w-full shadow-lg">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-semibold text-blue-700 bg-blue-50"
-                data-tab="guide">規範總覽</button>
+<div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100 hidden absolute w-full shadow-lg">
+  <div class="px-3 pt-3 pb-4 space-y-2">
 
-        <div class="px-3 pb-2">
-          <div class="text-xs text-gray-400 mb-2">總覽內快速跳轉</div>
-          <div class="grid grid-cols-2 gap-2">
-            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#overview">尺寸</button>
-            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#hierarchy">層級</button>
-            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#grid">網格</button>
-            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50" data-jump="#layouts">排版</button>
-            <button class="px-3 py-2 text-sm rounded-lg border border-gray-200 hover:bg-gray-50 col-span-2" data-jump="#discussion">討論</button>
-          </div>
-        </div>
+    <!-- 規範總覽 -->
+    <div>
+      <button class="mobile-drop-trigger" type="button" data-mobile-toggle="mobileGuideMenu">
+        <span>規範總覽</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
 
-        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="picfix">主圖修正</button>
-        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="howto">執行流程</button>
-        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="follow">預期成效</button>
-        <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
-                data-tab="record">紀錄事項</button>
+      <div id="mobileGuideMenu" class="mobile-submenu mt-2 space-y-2">
+        <button class="mobile-subbtn" data-tab="guide" data-jump="#overview">標準尺寸規範</button>
+        <button class="mobile-subbtn" data-tab="guide" data-jump="#hierarchy">版面層級</button>
+        <button class="mobile-subbtn" data-tab="guide" data-jump="#grid">網格系統</button>
+        <button class="mobile-subbtn" data-tab="guide" data-jump="#layouts">排版方案</button>
+        <button class="mobile-subbtn" data-tab="guide" data-jump="#discussion">討論與調整</button>
       </div>
     </div>
-  </nav>
+
+    <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+            data-tab="picfix">主圖修正</button>
+
+    <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+            data-tab="howto">執行流程</button>
+
+    <!-- 電商平台進度 -->
+    <div>
+      <button class="mobile-drop-trigger" type="button" data-mobile-toggle="mobileProgressMenu">
+        <span>電商平台進度</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
+
+      <div id="mobileProgressMenu" class="mobile-submenu mt-2 space-y-2">
+        <button class="mobile-subbtn" data-tab="progress-pchome-q1">PChome24 Q1</button>
+        <button class="mobile-subbtn" data-tab="progress-my-shopee">MY Shopee Q2-Q3</button>
+        <button class="mobile-subbtn" data-tab="progress-tw-shopee">TW Shopee Q2-Q3</button>
+        <button class="mobile-subbtn" data-tab="progress-kr-coupang">KR Coupang Q4</button>
+        <button class="mobile-subbtn" data-tab="progress-discussion">討論與調整</button>
+      </div>
+    </div>
+
+    <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+            data-tab="follow">預期成效</button>
+
+    <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
+            data-tab="record">紀錄事項</button>
+  </div>
+</div>
 
   <!-- Hero -->
   <header class="bg-white border-b border-gray-200 py-16">
@@ -1471,7 +1614,91 @@
   </section><!-- ✅ 關閉 process -->
 </div><!-- ✅ 關閉 tab-howto -->
 
-    
+<!-- ===================== TAB：電商平台進度 / PChome24 Q1 ===================== -->
+<div id="tab-progress-pchome-q1" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="placeholder-section">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">PChome24 Q1</h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          此頁先作為 PChome24 Q1 進度紀錄區塊，後續可補上主圖修改說明、執行時間、版本差異與待確認事項。
+        </p>
+        <div class="placeholder-box">
+          預留內容區塊<br />
+          後續可放：section / 圖片 / 表格 / 修正說明 / 狀態紀錄
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== TAB：電商平台進度 / MY Shopee ===================== -->
+<div id="tab-progress-my-shopee" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="placeholder-section">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">MY Shopee Q2-Q3</h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          此頁先作為 MY Shopee 進度頁，後續可紀錄語系調整、版型測試、產品批次與窗口回饋。
+        </p>
+        <div class="placeholder-box">
+          預留內容區塊
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== TAB：電商平台進度 / TW Shopee ===================== -->
+<div id="tab-progress-tw-shopee" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="placeholder-section">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">TW Shopee Q2-Q3</h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          此頁先作為 TW Shopee 進度頁，後續可補上執行批次、設計差異、平台限制與調整紀錄。
+        </p>
+        <div class="placeholder-box">
+          預留內容區塊
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== TAB：電商平台進度 / KR Coupang ===================== -->
+<div id="tab-progress-kr-coupang" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="placeholder-section">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">KR Coupang Q4</h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          此頁先作為 KR Coupang 進度頁，後續可記錄韓文語系、版面測試、圖片規範與初步排程。
+        </p>
+        <div class="placeholder-box">
+          預留內容區塊
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== TAB：電商平台進度 / 討論與調整 ===================== -->
+<div id="tab-progress-discussion" class="tab-panel">
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="placeholder-section">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">電商平台進度｜討論與調整</h2>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          此頁可作為各平台共同討論區，後續可彙整需求異動、設計建議、跨平台差異與待決議事項。
+        </p>
+        <div class="placeholder-box">
+          預留內容區塊
+        </div>
+      </div>
+    </div>
+  </section>
+</div>    
 
 
     <!-- ===================== TAB 4：預期成效 ===================== -->
@@ -1763,37 +1990,29 @@
   // Render icons grid
   const iconsGrid = document.getElementById("iconsGrid");
   if (iconsGrid) {
-    iconsGrid.innerHTML = iconsList
-      .map(
-        (i) => `
-        <div class="bg-white p-2 rounded border border-gray-100 flex flex-col items-center">
-          <img src="${i.src}" alt="${i.name}" class="w-full h-auto object-contain mb-1" />
-          <span class="text-[10px] text-gray-400 text-center">${i.name}</span>
-        </div>
-      `
-      )
-      .join("");
+    iconsGrid.innerHTML = iconsList.map((i) => `
+      <div class="bg-white p-2 rounded border border-gray-100 flex flex-col items-center">
+        <img src="${i.src}" alt="${i.name}" class="w-full h-auto object-contain mb-1" />
+        <span class="text-[10px] text-gray-400 text-center">${i.name}</span>
+      </div>
+    `).join("");
   }
 
-  // Render competitor grid + lightbox
+  // Render competitor grid
   const competitorGrid = document.getElementById("competitorGrid");
   if (competitorGrid) {
-    competitorGrid.innerHTML = competitorImages
-      .map(
-        (src) => `
-        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 relative group cursor-pointer hover:border-blue-500 transition shadow-sm hover:shadow-md"
-             data-lightbox="true" data-src="${src}">
-          <img src="${src}" alt="Competitor" class="w-full h-full object-contain p-1" />
-          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition flex items-center justify-center">
-            <span class="text-white opacity-0 group-hover:opacity-100 drop-shadow-md">🔍</span>
-          </div>
+    competitorGrid.innerHTML = competitorImages.map((src) => `
+      <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 relative group cursor-pointer hover:border-blue-500 transition shadow-sm hover:shadow-md"
+           data-lightbox="true" data-src="${src}">
+        <img src="${src}" alt="Competitor" class="w-full h-full object-contain p-1" />
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition flex items-center justify-center">
+          <span class="text-white opacity-0 group-hover:opacity-100 drop-shadow-md">🔍</span>
         </div>
-      `
-      )
-      .join("");
+      </div>
+    `).join("");
   }
 
-  // Lightbox logic
+  // Lightbox
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxClose = document.getElementById("lightboxClose");
@@ -1804,6 +2023,7 @@
     lightbox.classList.remove("lb-hidden");
     lightbox.classList.add("flex");
   }
+
   function closeLightbox() {
     if (!lightbox || !lightboxImg) return;
     lightboxImg.src = "";
@@ -1831,114 +2051,166 @@
   const menuIcon = document.getElementById("menuIcon");
   const closeIcon = document.getElementById("closeIcon");
 
+  function openMobileMenu() {
+    mobileMenu?.classList.remove("hidden");
+    menuIcon?.classList.add("hidden");
+    closeIcon?.classList.remove("hidden");
+  }
+
+  function closeMobileMenu() {
+    mobileMenu?.classList.add("hidden");
+    menuIcon?.classList.remove("hidden");
+    closeIcon?.classList.add("hidden");
+  }
+
   menuBtn?.addEventListener("click", () => {
-    const isOpen = !mobileMenu.classList.contains("hidden");
+    const isOpen = mobileMenu && !mobileMenu.classList.contains("hidden");
     if (isOpen) {
-      mobileMenu.classList.add("hidden");
-      menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
+      closeMobileMenu();
     } else {
-      mobileMenu.classList.remove("hidden");
-      menuIcon.classList.add("hidden");
-      closeIcon.classList.remove("hidden");
+      openMobileMenu();
     }
   });
 
-  // ===== Tabs switching (含 record) =====
+  // Tabs
   const panels = {
     guide: document.getElementById("tab-guide"),
     picfix: document.getElementById("tab-picfix"),
     howto: document.getElementById("tab-howto"),
+    "progress-pchome-q1": document.getElementById("tab-progress-pchome-q1"),
+    "progress-my-shopee": document.getElementById("tab-progress-my-shopee"),
+    "progress-tw-shopee": document.getElementById("tab-progress-tw-shopee"),
+    "progress-kr-coupang": document.getElementById("tab-progress-kr-coupang"),
+    "progress-discussion": document.getElementById("tab-progress-discussion"),
     follow: document.getElementById("tab-follow"),
-    record: document.getElementById("tab-record"), // ✅ 新增：紀錄事項
+    record: document.getElementById("tab-record"),
   };
 
-  const btnOverview = document.getElementById("btnOverview");
-  const btnPicfix = document.getElementById("btnPicfix");
-  const btnHowto = document.getElementById("btnHowto");
-  const btnFollow = document.getElementById("btnFollow");
-  const btnRecord = document.getElementById("btnRecord"); // ✅ 新增：紀錄事項按鈕
-  const overviewDropdown = document.getElementById("overviewDropdown");
+  const desktopButtons = {
+    guide: document.getElementById("btnGuide"),
+    picfix: document.getElementById("btnPicfix"),
+    howto: document.getElementById("btnHowto"),
+    progress: document.getElementById("btnProgress"),
+    follow: document.getElementById("btnFollow"),
+    record: document.getElementById("btnRecord"),
+  };
 
-  function setActiveBtn(activeKey) {
-    [btnOverview, btnPicfix, btnHowto, btnFollow, btnRecord].forEach((b) => b && b.classList.remove("is-active"));
-    if (activeKey === "guide") btnOverview?.classList.add("is-active");
-    if (activeKey === "picfix") btnPicfix?.classList.add("is-active");
-    if (activeKey === "howto") btnHowto?.classList.add("is-active");
-    if (activeKey === "follow") btnFollow?.classList.add("is-active");
-    if (activeKey === "record") btnRecord?.classList.add("is-active"); // ✅ 新增
+  const guideDropdown = document.getElementById("guideDropdown");
+  const progressDropdown = document.getElementById("progressDropdown");
+
+  function closeAllDropdowns() {
+    guideDropdown?.classList.remove("is-open");
+    progressDropdown?.classList.remove("is-open");
   }
 
-  function switchTab(key) {
-    Object.values(panels).forEach((p) => p && p.classList.remove("is-active"));
+  function setActiveBtn(key) {
+    Object.values(desktopButtons).forEach((btn) => btn?.classList.remove("is-active"));
+
+    if (key === "guide") desktopButtons.guide?.classList.add("is-active");
+    else if (key === "picfix") desktopButtons.picfix?.classList.add("is-active");
+    else if (key === "howto") desktopButtons.howto?.classList.add("is-active");
+    else if (key === "follow") desktopButtons.follow?.classList.add("is-active");
+    else if (key === "record") desktopButtons.record?.classList.add("is-active");
+    else if (key.startsWith("progress-")) desktopButtons.progress?.classList.add("is-active");
+  }
+
+  function switchTab(key, options = {}) {
+    Object.values(panels).forEach((panel) => panel?.classList.remove("is-active"));
     panels[key]?.classList.add("is-active");
     setActiveBtn(key);
+    closeAllDropdowns();
+    closeMobileMenu();
 
-    // 關掉 dropdown + mobile menu
-    overviewDropdown?.classList.remove("is-open");
-    mobileMenu?.classList.add("hidden");
-    menuIcon?.classList.remove("hidden");
-    closeIcon?.classList.add("hidden");
-
-    // 進新頁面就回到上方（像換頁）
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!options.skipScrollTop) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
-  // Desktop buttons
-  btnPicfix?.addEventListener("click", () => switchTab("picfix"));
-  btnHowto?.addEventListener("click", () => switchTab("howto"));
-  btnFollow?.addEventListener("click", () => switchTab("follow"));
-  btnRecord?.addEventListener("click", () => switchTab("record")); // ✅ 新增
+  // Desktop main buttons
+  desktopButtons.picfix?.addEventListener("click", () => switchTab("picfix"));
+  desktopButtons.howto?.addEventListener("click", () => switchTab("howto"));
+  desktopButtons.follow?.addEventListener("click", () => switchTab("follow"));
+  desktopButtons.record?.addEventListener("click", () => switchTab("record"));
 
-  // 規範總覽按鈕：點一下開/關 dropdown，但也要確保在 guide 頁
-  btnOverview?.addEventListener("click", () => {
-    if (!panels.guide?.classList.contains("is-active")) switchTab("guide");
-    overviewDropdown?.classList.toggle("is-open");
+  // Desktop dropdown toggles
+  desktopButtons.guide?.addEventListener("click", () => {
+    if (!panels.guide?.classList.contains("is-active")) switchTab("guide", { skipScrollTop: true });
+    progressDropdown?.classList.remove("is-open");
+    guideDropdown?.classList.toggle("is-open");
   });
 
-  // dropdown jump
+  desktopButtons.progress?.addEventListener("click", () => {
+    if (!desktopButtons.progress?.classList.contains("is-active")) {
+      switchTab("progress-pchome-q1", { skipScrollTop: true });
+    }
+    guideDropdown?.classList.remove("is-open");
+    progressDropdown?.classList.toggle("is-open");
+  });
+
+  // Dropdown item click
   document.querySelectorAll("[data-jump]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-jump");
-      if (!panels.guide?.classList.contains("is-active")) switchTab("guide");
-      overviewDropdown?.classList.remove("is-open");
+      const jumpTarget = btn.getAttribute("data-jump");
+      const targetTab = btn.getAttribute("data-tab") || "guide";
+
+      switchTab(targetTab, { skipScrollTop: true });
+      closeAllDropdowns();
 
       setTimeout(() => {
-        const el = document.querySelector(target);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 50);
+        const el = document.querySelector(jumpTarget);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 80);
     });
   });
 
-  mobileMenu?.addEventListener("click", (e) => {
-  const el = e.target.closest("[data-tab]");
-  if (!el) return;
+  document.querySelectorAll("[data-tab]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const jumpTarget = btn.getAttribute("data-jump");
+      const key = btn.getAttribute("data-tab");
+      if (!key) return;
 
-  // 如果是 <a>，避免 href 先跳走
-  e.preventDefault();
+      switchTab(key, { skipScrollTop: !!jumpTarget });
 
-  const key = el.getAttribute("data-tab");
-  console.log("[mobileMenu click] data-tab =", key);
-
-  if (key) switchTab(key);
-});
-
-  // 點 mobile menu 連結後自動收起
-  mobileMenu?.querySelectorAll("a").forEach((a) => {
-    a.addEventListener("click", () => {
-      mobileMenu.classList.add("hidden");
-      menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
+      if (jumpTarget) {
+        setTimeout(() => {
+          const el = document.querySelector(jumpTarget);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 80);
+      }
     });
   });
 
-  // 點外面關 dropdown
+  // Mobile submenu toggle
+  document.querySelectorAll("[data-mobile-toggle]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const targetId = trigger.getAttribute("data-mobile-toggle");
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      const isOpen = target.classList.contains("is-open");
+
+      document.querySelectorAll(".mobile-submenu").forEach((menu) => menu.classList.remove("is-open"));
+      document.querySelectorAll(".mobile-drop-trigger").forEach((btn) => btn.classList.remove("is-open"));
+
+      if (!isOpen) {
+        target.classList.add("is-open");
+        trigger.classList.add("is-open");
+      }
+    });
+  });
+
+  // Click outside dropdown
   document.addEventListener("click", (e) => {
-    const isInside = e.target.closest("#overviewDropdown") || e.target.closest("#btnOverview");
-    if (!isInside) overviewDropdown?.classList.remove("is-open");
+    const insideGuide = e.target.closest("#guideDropdown");
+    const insideProgress = e.target.closest("#progressDropdown");
+    if (!insideGuide && !insideProgress) {
+      closeAllDropdowns();
+    }
   });
 
-  /* ===== Hierarchy click -> highlight demo ===== */
+  // Hierarchy interaction
   const hierList = document.getElementById("hierarchyList");
   const demo = document.getElementById("hierDemo");
 
@@ -1967,17 +2239,12 @@
     });
   });
 
-  // Default
   setZoneActive("zone-main");
-
- 
-
-
-
 </script>
 
 </body>
 </html>
+
 
 
 
