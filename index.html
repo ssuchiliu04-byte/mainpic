@@ -259,6 +259,65 @@
   font-size: 12px;
   color: rgba(0,0,0,0.65);
 }
+
+/* 1. 連結樣式優化 */
+  .custom-link {
+    color: #2563eb; /* 藍色 */
+    text-decoration: underline;
+    margin-right: 12px;
+    transition: color 0.2s;
+    font-weight: 500;
+  }
+  .custom-link:hover {
+    color: #1d4ed8;
+    text-decoration: none;
+  }
+
+  /* 2. 圖片容器與 Hover 效果 */
+  .sp-bottom-gallery {
+    display: flex;
+    gap: 20px;
+    margin-top: 24px;
+  }
+  
+  .sp-bottom-item {
+    flex: 1;
+    cursor: zoom-in; /* 提示可以點擊放大 */
+    transition: transform 0.3s ease;
+    overflow: hidden; /* 防止放大時溢出邊框 */
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    padding: 10px;
+  }
+
+  /* 滑鼠經過時稍微放大 */
+  .sp-bottom-item:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 3. 點擊放大效果 (純CSS簡單版) */
+  /* 如果想要更進階的點擊放大，建議搭配 JS 使用，這裡先做點擊時的顯著放大 */
+  .sp-bottom-item:active {
+    transform: scale(1.5);
+    z-index: 50;
+  }
+
+  .sp-bottom-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  figcaption {
+    text-align: center;
+    margin-top: 8px;
+    color: #4b5563;
+    font-size: 0.875rem;
+  }
+    
   </style>
 </head>
 
@@ -1525,39 +1584,37 @@
 
 <!-- ===================== TAB：電商平台進度 / PChome24 Q1 ===================== -->
  <section class="pt-16 pb-6 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="placeholder-section">
-        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">4/24 PChome24 DRAM SSD UFD PHD PBK ASS MSD PSD全數上架</h2>
-        <p class="mt-4 text-gray-600 leading-relaxed">
-          OP30 已於4/24日全數更新完畢 感謝協助 提供Dram做前後對比
-        </p>
-        <a href="https://24h.pchome.com.tw/store/DRACDC" target="_blank" rel="noopener noreferrer">
-  DRAM</a>
-        <a href="https://24h.pchome.com.tw/store/DYAOAC" rel="noopener noreferrer">
-  PBK</a>
-        <a href="https://24h.pchome.com.tw/store/DGCD1G" rel="noopener noreferrer">
-  UFD</a>
-        <a href="https://24h.pchome.com.tw/store/DGAG20" rel="noopener noreferrer">
-  MSD</a>
-        <a href="https://24h.pchome.com.tw/store/DRAA9T" rel="noopener noreferrer">
-  PSD/SSD</a>
-        <a href="https://24h.pchome.com.tw/prod/DYBA18-A900JP34M" rel="noopener noreferrer">
-  ASS</a>
-        <div class="placeholder-box gallery-mode">
-          <div class="sp-bottom-gallery">
-            <figure class="sp-bottom-item">
-              <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/images/EC_Pic4.png" alt="EC_Pic4.png">
-              <figcaption>更新前</figcaption>
-            </figure>
-            <figure class="sp-bottom-item">
-              <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/images/EC_Pic3.png" alt="EC_Pic3.png">
-              <figcaption>更新後</figcaption>
-            </figure>
-          </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="placeholder-section">
+      <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">4/24 PChome24 DRAM SSD UFD PHD PBK ASS MSD PSD全數上架</h2>
+      <p class="mt-4 text-gray-600 leading-relaxed">
+        OP30 已於4/24日全數更新完畢 感謝協助 提供Dram做前後對比
+      </p>
+      
+      <div class="mt-4 mb-6">
+        <a href="https://24h.pchome.com.tw/store/DRACDC" target="_blank" rel="noopener noreferrer" class="custom-link">DRAM</a>
+        <a href="https://24h.pchome.com.tw/store/DYAOAC" target="_blank" rel="noopener noreferrer" class="custom-link">PBK</a>
+        <a href="https://24h.pchome.com.tw/store/DGCD1G" target="_blank" rel="noopener noreferrer" class="custom-link">UFD</a>
+        <a href="https://24h.pchome.com.tw/store/DGAG20" target="_blank" rel="noopener noreferrer" class="custom-link">MSD</a>
+        <a href="https://24h.pchome.com.tw/store/DRAA9T" target="_blank" rel="noopener noreferrer" class="custom-link">PSD/SSD</a>
+        <a href="https://24h.pchome.com.tw/prod/DYBA18-A900JP34M" target="_blank" rel="noopener noreferrer" class="custom-link">ASS</a>
+      </div>
+
+      <div class="placeholder-box gallery-mode">
+        <div class="sp-bottom-gallery">
+          <figure class="sp-bottom-item">
+            <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/images/EC_Pic4.png" alt="更新前內容">
+            <figcaption>更新前</figcaption>
+          </figure>
+          <figure class="sp-bottom-item">
+            <img src="https://raw.githubusercontent.com/ssuchiliu04-byte/mainpic/main/images/EC_Pic3.png" alt="更新後內容">
+            <figcaption>更新後</figcaption>
+          </figure>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
      <section class="pt-16 pb-6 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
